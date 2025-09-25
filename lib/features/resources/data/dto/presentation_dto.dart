@@ -2,7 +2,7 @@ import 'package:datn_mobile/features/resources/data/dto/slide_dto.dart';
 import 'package:datn_mobile/features/resources/domain/entity/presentation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'presentationd_dto.g.dart';
+part 'presentation_dto.g.dart';
 
 @JsonSerializable()
 class PresentationDto {
