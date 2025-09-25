@@ -8,7 +8,7 @@ Before you begin, ensure you have the following installed on your development ma
 
 ### Required Software
 
-- **Flutter SDK**: Version 3.8.0 or higher
+- **Flutter SDK**: Version 3.8.0 or higher (latest stable recommended)
   - Download from [flutter.dev](https://flutter.dev/docs/get-started/install)
   - Ensure Flutter is added to your PATH
 
