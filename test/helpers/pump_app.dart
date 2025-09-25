@@ -19,10 +19,7 @@ extension PumpApp on WidgetTester {
     return await pumpWidget(
       UncontrolledProviderScope(
         container: newContainer,
-        child: FakeApp(
-          widget: child,
-          providerContainer: container,
-        ),
+        child: FakeApp(widget: child, providerContainer: container),
       ),
     );
   }
@@ -31,15 +28,11 @@ extension PumpApp on WidgetTester {
 class FakeApp extends ConsumerWidget {
   final ProviderContainer? providerContainer;
   final Widget widget;
-  const FakeApp({
-    super.key,
-    required this.widget,
-    this.providerContainer,
-  });
+  const FakeApp({super.key, required this.widget, this.providerContainer});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentTheme = ref.read(themecontrollerProvider);
+    final currentTheme = ref.read(themeControllerProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Themes.theme,
