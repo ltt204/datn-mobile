@@ -10,6 +10,7 @@ class PresentationRepositoryImpl implements PresentationRepository {
     // PresentationDto presentationDto = presentation.toDto();
     // LOGIC...
     _remoteSource.createPresentation(presentation.toDto());
+    // TODO: implement addBook
     throw UnimplementedError();
   }
 
@@ -18,7 +19,6 @@ class PresentationRepositoryImpl implements PresentationRepository {
     final dtoResponse = await _remoteSource.fetchPresentations();
 
     return dtoResponse.data?.map((dto) => dto.toEntity()).toList() ?? [];
+    // Implementation details would go here
   }
-
-  // Implementation details would go here
 }
