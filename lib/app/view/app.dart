@@ -30,7 +30,7 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
   @override
   Widget build(BuildContext context) {
     final approuter = ref.watch(autorouterProvider);
-    final currentTheme = ref.watch(themecontrollerProvider);
+    final currentTheme = ref.watch(themeControllerProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       //TODO: change app name
@@ -40,9 +40,7 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
       themeMode: currentTheme,
       routerConfig: approuter.config(
         placeholder: (context) => const SizedBox.shrink(),
-        navigatorObservers: () => [
-          RouterObserver(),
-        ],
+        navigatorObservers: () => [RouterObserver()],
       ),
       locale: ref.watch(translationsPod).$meta.locale.flutterLocale,
       supportedLocales: AppLocaleUtils.supportedLocales,
@@ -52,9 +50,7 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
           ///Used for responsive design
           ///Here you can define breakpoint and how the responsive should work
           child = ResponsiveBreakPointWrapper(
-            firstFrameWidget: Container(
-              color: Colors.white,
-            ),
+            firstFrameWidget: Container(color: Colors.white),
             child: child!,
           );
 
@@ -63,8 +59,9 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
           final mediaquery = MediaQuery.of(context);
           child = MediaQuery(
             data: mediaquery.copyWith(
-              textScaler:
-                  TextScaler.linear(mediaquery.textScaleFactor.clamp(0, 1)),
+              textScaler: TextScaler.linear(
+                mediaquery.textScaleFactor.clamp(0, 1),
+              ),
             ),
             child: child,
           );
@@ -80,18 +77,18 @@ class _AppState extends ConsumerState<App> with GlobalHelper {
                     systemNavigationBarIconBrightness: Brightness.dark,
                   )
                 : currentTheme == ThemeMode.light
-                    ? SystemUiOverlayStyle.dark.copyWith(
-                        statusBarColor: Colors.white.withOpacity(0.4),
-                        systemNavigationBarColor: Colors.grey,
-                        systemNavigationBarDividerColor: Colors.grey,
-                        systemNavigationBarIconBrightness: Brightness.light,
-                      )
-                    : SystemUiOverlayStyle.dark.copyWith(
-                        statusBarColor: Colors.white.withOpacity(0.4),
-                        systemNavigationBarColor: Colors.grey,
-                        systemNavigationBarDividerColor: Colors.grey,
-                        systemNavigationBarIconBrightness: Brightness.light,
-                      ),
+                ? SystemUiOverlayStyle.dark.copyWith(
+                    statusBarColor: Colors.white.withOpacity(0.4),
+                    systemNavigationBarColor: Colors.grey,
+                    systemNavigationBarDividerColor: Colors.grey,
+                    systemNavigationBarIconBrightness: Brightness.light,
+                  )
+                : SystemUiOverlayStyle.dark.copyWith(
+                    statusBarColor: Colors.white.withOpacity(0.4),
+                    systemNavigationBarColor: Colors.grey,
+                    systemNavigationBarDividerColor: Colors.grey,
+                    systemNavigationBarIconBrightness: Brightness.light,
+                  ),
             child: GestureDetector(
               child: child,
               onTap: () {

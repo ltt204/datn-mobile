@@ -16,42 +16,33 @@ extension AsyncDisplay<T> on AsyncValue<T> {
     bool isLinear = false,
     VoidCallback? onRetry,
     bool includedefaultDioErrorMessage = false,
-  }) =>
-      when(
-        data: data,
-        error: (error, stackTrace) {
-          return errorWidget != null
-              ? errorWidget(
-                  error,
-                  stackTrace,
-                )
-              : DefaultErrorWidget(
-                  isLinear: isLinear,
-                  error: error,
-                  stackTrace: stackTrace,
-                  onRetry: onRetry,
-                  includedefaultDioErrorMessage: includedefaultDioErrorMessage,
-                );
-        },
-        loading: () {
-          return loadingWidget != null
-              ? loadingWidget()
-              : DefaultLoadingWidget(
-                  isLinear: isLinear,
-                );
-        },
-        skipError: skipError,
-        skipLoadingOnRefresh: skipLoadingOnRefresh,
-        skipLoadingOnReload: skipLoadingOnReload,
-      );
+  }) => when(
+    data: data,
+    error: (error, stackTrace) {
+      return errorWidget != null
+          ? errorWidget(error, stackTrace)
+          : DefaultErrorWidget(
+              isLinear: isLinear,
+              error: error,
+              stackTrace: stackTrace,
+              onRetry: onRetry,
+              includedefaultDioErrorMessage: includedefaultDioErrorMessage,
+            );
+    },
+    loading: () {
+      return loadingWidget != null
+          ? loadingWidget()
+          : DefaultLoadingWidget(isLinear: isLinear);
+    },
+    skipError: skipError,
+    skipLoadingOnRefresh: skipLoadingOnRefresh,
+    skipLoadingOnReload: skipLoadingOnReload,
+  );
 }
 
 /// This class give defaut loading widget
 class DefaultLoadingWidget extends StatelessWidget {
-  const DefaultLoadingWidget({
-    required this.isLinear,
-    super.key,
-  });
+  const DefaultLoadingWidget({required this.isLinear, super.key});
   final bool isLinear;
 
   @override
@@ -93,13 +84,14 @@ class DefaultErrorWidget extends StatelessWidget {
                 ),
                 if (onRetry != null)
                   Flexible(
-                      child: ElevatedButton(
-                    onPressed: onRetry,
-                    child: const Text('Try again '),
-                  ))
+                    child: ElevatedButton(
+                      onPressed: onRetry,
+                      child: const Text('Try again '),
+                    ),
+                  )
                 else
-                  Flexible(
-                    child: const Padding(
+                  const Flexible(
+                    child: Padding(
                       padding: EdgeInsetsGeometry.all(8),
                       child: Text('Try Again later.'),
                     ),
@@ -113,20 +105,14 @@ class DefaultErrorWidget extends StatelessWidget {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.red,
-                        width: 2,
-                      ),
+                      border: Border.all(color: Colors.red, width: 2),
                     ),
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
+                    child: const Icon(Icons.close, color: Colors.red),
                   ),
                 ),
-                Flexible(
+                const Flexible(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       'Something went wrong! ',
                       style: TextStyle(
@@ -148,10 +134,10 @@ class DefaultErrorWidget extends StatelessWidget {
                     ),
                   )
                 else
-                  Flexible(
+                  const Flexible(
                     child: Padding(
                       padding: EdgeInsets.all(8),
-                      child: const Text('Try Again later.'),
+                      child: Text('Try Again later.'),
                     ),
                   ),
               ],
@@ -173,9 +159,7 @@ class ErrorTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (includedefaultDioErrorMessage && error is DioException) {
-      return DefaultDioErrorWidget(
-        dioError: error as DioException,
-      );
+      return DefaultDioErrorWidget(dioError: error as DioException);
     }
     return Flexible(
       child: Padding(
@@ -191,10 +175,7 @@ class ErrorTextWidget extends StatelessWidget {
 
 ///This class used to show error message according to DioException type
 class DefaultDioErrorWidget extends StatelessWidget {
-  const DefaultDioErrorWidget({
-    required this.dioError,
-    super.key,
-  });
+  const DefaultDioErrorWidget({required this.dioError, super.key});
   final DioException dioError;
 
   @override
@@ -203,24 +184,29 @@ class DefaultDioErrorWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: switch (dioError.type) {
-          DioExceptionType.connectionTimeout => Text(
-              'Connection Timeout Error',
-              style: TextStyle(color: Colors.red),
-            ),
-          DioExceptionType.sendTimeout => Text(
-              'Unable to connect to the server.Please try again later.',
-            ),
-          DioExceptionType.receiveTimeout =>
-            Text('Check you internet connection reliability.'),
-          DioExceptionType.badCertificate =>
-            Text('Please update your OS or add certificate.'),
-          DioExceptionType.badResponse =>
-            Text('Something went wrong.Please try again later.'),
-          DioExceptionType.cancel => Text('Request Cancelled'),
-          DioExceptionType.connectionError =>
-            Text('Unable to connect to server.Please try again later.'),
-          DioExceptionType.unknown =>
-            Text('Please check your internet connection.'),
+          DioExceptionType.connectionTimeout => const Text(
+            'Connection Timeout Error',
+            style: TextStyle(color: Colors.red),
+          ),
+          DioExceptionType.sendTimeout => const Text(
+            'Unable to connect to the server.Please try again later.',
+          ),
+          DioExceptionType.receiveTimeout => const Text(
+            'Check you internet connection reliability.',
+          ),
+          DioExceptionType.badCertificate => const Text(
+            'Please update your OS or add certificate.',
+          ),
+          DioExceptionType.badResponse => const Text(
+            'Something went wrong.Please try again later.',
+          ),
+          DioExceptionType.cancel => const Text('Request Cancelled'),
+          DioExceptionType.connectionError => const Text(
+            'Unable to connect to server.Please try again later.',
+          ),
+          DioExceptionType.unknown => const Text(
+            'Please check your internet connection.',
+          ),
         },
       ),
     );
