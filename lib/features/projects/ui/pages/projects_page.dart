@@ -22,13 +22,68 @@ class ProjectsPage extends StatelessWidget {
 class _ProjectsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer(
-      builder: (context, ref, child) {
-        final presentationsAsync = ref.watch(presentationsControllerProvider);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SearchAnchor(
+            builder: (BuildContext context, SearchController controller) {
+              return SearchBar(
+                controller: controller,
+                padding: const WidgetStatePropertyAll<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 16.0),
+                ),
+                onTap: () {
+                  controller.openView();
+                },
+                onChanged: (_) {
+                  controller.openView();
+                },
+                leading: const Icon(Icons.search),
+                hintText: 'Search projects...',
+              );
+            },
+            suggestionsBuilder:
+                (BuildContext context, SearchController controller) {
+                  return List<ListTile>.generate(5, (int index) {
+                    final String item = 'item $index';
+                    return ListTile(
+                      title: Text(item),
+                      onTap: () {
+                        // setState(() {
+                        //   controller.closeView(item);
+                        // });
+                      },
+                    );
+                  });
+                },
+          ),
+          const SizedBox(height: 16),
+          const _ProjectsRow(),
+        ],
+      ),
+    );
+  }
+}
 
-        return presentationsAsync.easyWhen(
-          data: (presentations) {
-            return SingleChildScrollView(
+class _ProjectsRow extends ConsumerWidget {
+  const _ProjectsRow();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final presentationsAsync = ref.watch(presentationsControllerProvider);
+
+    return presentationsAsync.easyWhen(
+      data: (presentations) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Your recently works',
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            ),
+            SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -41,8 +96,8 @@ class _ProjectsView extends StatelessWidget {
                     )
                     .toList(),
               ),
-            );
-          },
+            ),
+          ],
         );
       },
     );
