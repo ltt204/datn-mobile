@@ -1,5 +1,5 @@
 import 'package:auto_route/annotations.dart';
-import 'package:datn_mobile/features/projects/ui/providers/presentation_providers.dart';
+import 'package:datn_mobile/features/projects/controllers/presentation_controller.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/presentation/presentation_card.dart';
 import 'package:datn_mobile/shared/riverpod_ext/async_value_easy_when.dart';
 import 'package:flutter/material.dart';
@@ -75,8 +75,11 @@ class _ProjectsRow extends ConsumerWidget {
     final presentationsAsync = ref.watch(presentationsControllerProvider);
 
     return presentationsAsync.easyWhen(
-      data: (presentations) {
-        return Column(
+      data: (presentations) => RefreshIndicator(
+        onRefresh: () async {
+          await ref.read(presentationsControllerProvider.notifier).refresh();
+        },
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
@@ -98,8 +101,8 @@ class _ProjectsRow extends ConsumerWidget {
               ),
             ),
           ],
-        );
-      },
+        ),
+      ),
     );
   }
 }
