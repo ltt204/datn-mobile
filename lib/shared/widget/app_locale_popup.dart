@@ -14,50 +14,40 @@ class AppLocalePopUp extends ConsumerWidget {
     final localeName = t["locale_${curentlocale.languageCode}"].toString();
 
     return PopupMenuButton<AppLocale>(
-        initialValue: AppLocaleUtils.parse(curentlocale.languageCode),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(localeName),
-            const Icon(Icons.arrow_drop_down),
-          ],
-        ),
-        //  icon: const Icon(Icons.translate),
-        // Callback that sets the selected popup menu item.
-        onSelected: (locale) async {
-          final update = switch (locale) {
-            AppLocale.en => await AppLocale.en.build(),
-            AppLocale.es => await AppLocale.es.build(),
-            AppLocale.vi => await AppLocale.vi.build(),
-          };
-          ref.read(translationsPod.notifier).update(
-                (state) => update,
-              );
-        },
-        itemBuilder: (BuildContext context) => AppLocale.values.map(
-              (e) {
-                return PopupMenuItem<AppLocale>(
-                  value: e,
-                  child: e.languageCode == curentlocale.languageCode
-                      ? SelectedLocaleItem(
-                          locale: e.flutterLocale,
-                          key: ValueKey('selected ${e.languageCode}'),
-                        )
-                      : UnselectedLocaleItem(
-                          locale: e.flutterLocale,
-                          key: ValueKey('unselected ${e.languageCode}'),
-                        ),
-                );
-              },
-            ).toList());
+      initialValue: AppLocaleUtils.parse(curentlocale.languageCode),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [Text(localeName), const Icon(Icons.arrow_drop_down)],
+      ),
+      //  icon: const Icon(Icons.translate),
+      // Callback that sets the selected popup menu item.
+      onSelected: (locale) async {
+        final update = switch (locale) {
+          AppLocale.en => await AppLocale.en.build(),
+          AppLocale.vi => await AppLocale.vi.build(),
+        };
+        ref.read(translationsPod.notifier).update((state) => update);
+      },
+      itemBuilder: (BuildContext context) => AppLocale.values.map((e) {
+        return PopupMenuItem<AppLocale>(
+          value: e,
+          child: e.languageCode == curentlocale.languageCode
+              ? SelectedLocaleItem(
+                  locale: e.flutterLocale,
+                  key: ValueKey('selected ${e.languageCode}'),
+                )
+              : UnselectedLocaleItem(
+                  locale: e.flutterLocale,
+                  key: ValueKey('unselected ${e.languageCode}'),
+                ),
+        );
+      }).toList(),
+    );
   }
 }
 
 class SelectedLocaleItem extends ConsumerWidget {
-  const SelectedLocaleItem({
-    super.key,
-    required this.locale,
-  });
+  const SelectedLocaleItem({super.key, required this.locale});
   final Locale locale;
 
   @override
@@ -66,10 +56,7 @@ class SelectedLocaleItem extends ConsumerWidget {
     final localeName = t["locale_${locale.languageCode}"].toString();
     return Row(
       children: [
-        const Icon(
-          Icons.check,
-          color: Colors.green,
-        ),
+        const Icon(Icons.check, color: Colors.green),
         Text(localeName),
       ],
     );
@@ -77,10 +64,7 @@ class SelectedLocaleItem extends ConsumerWidget {
 }
 
 class UnselectedLocaleItem extends ConsumerWidget {
-  const UnselectedLocaleItem({
-    super.key,
-    required this.locale,
-  });
+  const UnselectedLocaleItem({super.key, required this.locale});
   final Locale locale;
 
   @override
@@ -92,10 +76,7 @@ class UnselectedLocaleItem extends ConsumerWidget {
       locale: locale,
       child: Text(
         localeName,
-        style: const TextStyle(
-          color: Colors.grey,
-          fontWeight: FontWeight.bold,
-        ),
+        style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
       ),
     );
   }

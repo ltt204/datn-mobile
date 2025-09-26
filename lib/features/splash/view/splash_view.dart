@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datn_mobile/bootstrap.dart';
 import 'package:datn_mobile/features/splash/controller/future_initializer.dart';
-import 'package:datn_mobile/shared/riverpod_ext/asynvalue_easy_when.dart';
+import 'package:datn_mobile/shared/riverpod_ext/async_value_easy_when.dart';
 
 ///This view displayed for initializing all the required things on initialization.
 /// This will help for initial loading screen for apps with heavy things initialization;
@@ -14,12 +14,12 @@ class SplashView extends ConsumerStatefulWidget {
   /// If false, it will show splash loader from the start of the app upto intialization
   ///  without deferring the first frame.
   ///
-  final bool removeSpalshLoader;
+  final bool removeSplashLoader;
   final void Function(ProviderContainer container) onInitialized;
   const SplashView({
     super.key,
     required this.onInitialized,
-    required this.removeSpalshLoader,
+    required this.removeSplashLoader,
   });
 
   @override
@@ -32,19 +32,17 @@ class _SplashViewState extends ConsumerState<SplashView> {
   void initState() {
     stopwatch = Stopwatch()..start();
     super.initState();
-    if (widget.removeSpalshLoader) {
+    if (widget.removeSplashLoader) {
       RendererBinding.instance.deferFirstFrame();
     }
   }
 
   @override
   void didChangeDependencies() {
-    if (widget.removeSpalshLoader) {
-      ref.read(futureInitializerPod.future).whenComplete(
-        () {
-          RendererBinding.instance.allowFirstFrame();
-        },
-      );
+    if (widget.removeSplashLoader) {
+      ref.read(futureInitializerPod.future).whenComplete(() {
+        RendererBinding.instance.allowFirstFrame();
+      });
     }
 
     super.didChangeDependencies();
@@ -62,16 +60,14 @@ class _SplashViewState extends ConsumerState<SplashView> {
     return Consumer(
       builder: (context, ref, child) {
         final futureAsync = ref.watch(futureInitializerPod);
-        ref.listen(
-          futureInitializerPod,
-          (previous, next) {
-            if (next is AsyncData && next.value != null) {
-              talker.info(
-                  "Initialization takes ${stopwatch.elapsedMilliseconds}");
-              widget.onInitialized(next.requireValue);
-            }
-          },
-        );
+        ref.listen(futureInitializerPod, (previous, next) {
+          if (next is AsyncData && next.value != null) {
+            talker.info(
+              "Initialization takes ${stopwatch.elapsedMilliseconds}",
+            );
+            widget.onInitialized(next.requireValue);
+          }
+        });
         return futureAsync.easyWhen(
           data: (data) {
             return const SizedBox.shrink();
@@ -86,9 +82,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
 }
 
 class LoaderChild extends StatefulWidget {
-  const LoaderChild({
-    super.key,
-  });
+  const LoaderChild({super.key});
 
   @override
   State<LoaderChild> createState() => _LoaderChildState();
@@ -121,26 +115,21 @@ class _LoaderChildState extends State<LoaderChild>
             Center(
               child: RotationTransition(
                 turns: _animation,
-                child: const FlutterLogo(
-                  size: 100,
-                ),
+                child: const FlutterLogo(size: 100),
               ),
             ),
             const Positioned(
               bottom: 44,
-              child: CircularProgressIndicator(
-                color: Colors.amber,
-              ),
+              child: CircularProgressIndicator(color: Colors.amber),
             ),
             const Positioned(
               bottom: 16,
               child: Material(
-                  child: Text(
-                "Welcome to Riverpod Simple Architecture App",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                child: Text(
+                  "Welcome to Riverpod Simple Architecture App",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-              )),
+              ),
             ),
           ],
         ),
