@@ -1,6 +1,5 @@
 part of 'controller_provider.dart';
 
-// Query
 class PresentationsController extends AsyncNotifier<List<PresentationMinimal>> {
   @override
   Future<List<PresentationMinimal>> build() async {
@@ -20,7 +19,6 @@ class PresentationsController extends AsyncNotifier<List<PresentationMinimal>> {
   }
 }
 
-// Command
 class CreatePresentationController extends AsyncNotifier<void> {
   @override
   Future<void> build() async {}
