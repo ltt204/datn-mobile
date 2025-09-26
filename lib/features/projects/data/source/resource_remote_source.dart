@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:datn_mobile/features/resources/data/dto/presentation_dto.dart';
-import 'package:datn_mobile/features/resources/data/dto/presentation_minimal_dto.dart';
+import 'package:datn_mobile/features/projects/data/dto/presentation_dto.dart';
+import 'package:datn_mobile/features/projects/data/dto/presentation_minimal_dto.dart';
 import 'package:datn_mobile/shared/api_client/response_dto/server_reponse_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
