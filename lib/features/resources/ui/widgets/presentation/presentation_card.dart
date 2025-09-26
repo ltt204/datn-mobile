@@ -1,10 +1,10 @@
-import 'package:datn_mobile/features/resources/data/dto/presentation_minimal_dto.dart';
+import 'package:datn_mobile/features/resources/domain/entity/presentation_minimal.dart';
 import 'package:datn_mobile/features/resources/enum/resource_type.dart';
 import 'package:datn_mobile/features/resources/ui/widgets/common/abstract_resource_card.dart';
 import 'package:flutter/material.dart';
 
 class PresentationCard extends StatelessWidget {
-  final PresentationMinimalDto presentation;
+  final PresentationMinimal presentation;
 
   const PresentationCard({super.key, required this.presentation});
 

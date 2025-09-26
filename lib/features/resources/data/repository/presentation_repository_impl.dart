@@ -2,8 +2,8 @@ import 'package:datn_mobile/features/resources/data/dto/presentation_dto.dart';
 import 'package:datn_mobile/features/resources/data/dto/presentation_minimal_dto.dart';
 import 'package:datn_mobile/features/resources/data/source/resource_remote_source.dart';
 import 'package:datn_mobile/features/resources/domain/entity/presentation.dart';
+import 'package:datn_mobile/features/resources/domain/entity/presentation_minimal.dart';
 import 'package:datn_mobile/features/resources/domain/repository/presentation_repository.dart';
-import 'package:datn_mobile/shared/api_client/response_dto/server_reponse_dto.dart';
 
 class PresentationRepositoryImpl implements PresentationRepository {
   final ResourceRemoteSource _remoteSource;
@@ -20,8 +20,10 @@ class PresentationRepositoryImpl implements PresentationRepository {
   }
 
   @override
-  Future<ServerResponseDto<List<PresentationMinimalDto>>> fetchPresentations() {
-    return _remoteSource.fetchPresentations();
+  Future<List<PresentationMinimal>> fetchPresentations() async {
+    final dtoResponse = await _remoteSource.fetchPresentations();
+
+    return dtoResponse.data?.map((dto) => dto.toEntity()).toList() ?? [];
   }
 
   // Implementation details would go here

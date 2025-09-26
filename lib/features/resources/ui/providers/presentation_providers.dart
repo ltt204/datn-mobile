@@ -1,8 +1,8 @@
 // di bridge
-import 'package:datn_mobile/features/resources/data/dto/presentation_minimal_dto.dart';
 import 'package:datn_mobile/features/resources/data/repository/presentation_repository_impl.dart';
 import 'package:datn_mobile/features/resources/data/source/resource_remote_source_provider.dart';
 import 'package:datn_mobile/features/resources/domain/entity/presentation.dart';
+import 'package:datn_mobile/features/resources/domain/entity/presentation_minimal.dart';
 import 'package:datn_mobile/features/resources/domain/repository/presentation_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,20 +12,18 @@ final presentationRepositoryProvider = Provider<PresentationRepository>(
 
 // Query
 final presentationsControllerProvider =
-    AsyncNotifierProvider<
-      PresentationsController,
-      List<PresentationMinimalDto>
-    >(() => PresentationsController());
+    AsyncNotifierProvider<PresentationsController, List<PresentationMinimal>>(
+      () => PresentationsController(),
+    );
 
-class PresentationsController
-    extends AsyncNotifier<List<PresentationMinimalDto>> {
+class PresentationsController extends AsyncNotifier<List<PresentationMinimal>> {
   @override
-  Future<List<PresentationMinimalDto>> build() async {
+  Future<List<PresentationMinimal>> build() async {
     final response = await ref
         .read(presentationRepositoryProvider)
         .fetchPresentations();
 
-    return response.data ?? List.empty();
+    return response;
   }
 
   Future<void> refresh() async {
@@ -33,12 +31,11 @@ class PresentationsController
     final response = await ref
         .read(presentationRepositoryProvider)
         .fetchPresentations();
-    final data = response.data ?? List.empty();
-    state = await AsyncValue.guard(() => Future.value(data));
+    state = await AsyncValue.guard(() => Future.value(response));
   }
 }
 
-// command
+// Command
 final createPresentationControllerProvider =
     AsyncNotifierProvider<CreatePresentationController, void>(
       () => CreatePresentationController(),

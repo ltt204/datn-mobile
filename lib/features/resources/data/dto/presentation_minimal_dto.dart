@@ -1,4 +1,5 @@
 import 'package:datn_mobile/features/resources/data/dto/slide_dto.dart';
+import 'package:datn_mobile/features/resources/domain/entity/presentation_minimal.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'presentation_minimal_dto.g.dart';
@@ -23,4 +24,28 @@ class PresentationMinimalDto {
       _$PresentationMinimalDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$PresentationMinimalDtoToJson(this);
+}
+
+extension PresentationMinimalMapper on PresentationMinimalDto {
+  PresentationMinimal toEntity() {
+    return PresentationMinimal(
+      id: id,
+      title: title,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      thumbnail: thumbnail?.toEntity(),
+    );
+  }
+}
+
+extension PresentationMinimalDtoMapper on PresentationMinimal {
+  PresentationMinimalDto toDto() {
+    return PresentationMinimalDto(
+      id: id,
+      title: title,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      thumbnail: thumbnail?.toDto(),
+    );
+  }
 }
