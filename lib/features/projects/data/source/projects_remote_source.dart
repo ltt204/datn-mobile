@@ -7,12 +7,12 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
-part 'resource_remote_source.g.dart';
+part 'projects_remote_source.g.dart';
 
 @RestApi()
-abstract class ResourceRemoteSource {
-  factory ResourceRemoteSource(Dio dio, {String baseUrl}) =
-      _ResourceRemoteSource;
+abstract class ProjectsRemoteSource {
+  factory ProjectsRemoteSource(Dio dio, {String baseUrl}) =
+      _ProjectsRemoteSource;
 
   @GET("/presentations")
   Future<ServerResponseDto<List<PresentationMinimalDto>>> fetchPresentations();

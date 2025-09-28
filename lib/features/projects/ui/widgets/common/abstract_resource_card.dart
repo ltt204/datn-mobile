@@ -3,8 +3,8 @@ import 'package:datn_mobile/features/projects/enum/resource_type.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/common/thumbnail.dart';
 import 'package:flutter/material.dart';
 
-class AbstractResourceCard extends StatelessWidget {
-  const AbstractResourceCard({
+class AbstractDocumentCard extends StatelessWidget {
+  const AbstractDocumentCard({
     super.key,
     required this.title,
     this.description,

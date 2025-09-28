@@ -10,7 +10,7 @@ class PresentationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AbstractResourceCard(
+    return AbstractDocumentCard(
       title: presentation.title ?? "Untitled",
       createdAt: presentation.createdAt,
       resourceType: ResourceType.presentation,
