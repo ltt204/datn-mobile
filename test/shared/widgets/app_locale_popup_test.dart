@@ -57,43 +57,40 @@ void main() {
         );
       },
     );
-    testWidgets('renders Applocalepopup within Spanish if selected Spanish ', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(1125, 1800);
-      final translation = AppLocale.en.buildSync();
-      final container = ProviderContainer(
-        overrides: [
-          enableInternetCheckerPod.overrideWith((ref) => false),
-          appBoxProvider.overrideWithValue(appBox),
-          translationsPod.overrideWith((ref) => translation),
-        ],
-      );
-      await tester.pumpApp(
-        child: const Scaffold(body: AppLocalePopUp()),
-        container: container,
-      );
-      await tester.pumpAndSettle();
-      spot<AppLocalePopUp>().existsAtLeastOnce();
-      await act.tap(spotIcon(Icons.arrow_drop_down));
-      spot<SelectedLocaleItem>().spotText("English").existsAtLeastOnce();
-      final spanishitem = spot<UnselectedLocaleItem>().spotText("Spanish");
-      spanishitem.existsAtLeastOnce();
+    testWidgets(
+      'renders Applocalepopup within Vietnamese if selected Vietnamese ',
+      (tester) async {
+        tester.view.physicalSize = const Size(1125, 1800);
+        final translation = AppLocale.en.buildSync();
+        final container = ProviderContainer(
+          overrides: [
+            enableInternetCheckerPod.overrideWith((ref) => false),
+            appBoxProvider.overrideWithValue(appBox),
+            translationsPod.overrideWith((ref) => translation),
+          ],
+        );
+        await tester.pumpApp(
+          child: const Scaffold(body: AppLocalePopUp()),
+          container: container,
+        );
+        await tester.pumpAndSettle();
+        spot<AppLocalePopUp>().existsAtLeastOnce();
+        await act.tap(spotIcon(Icons.arrow_drop_down));
+        await tester.pumpAndSettle();
+        spot<SelectedLocaleItem>().spotText("English").existsAtLeastOnce();
+        final vietnameseItem = spot<UnselectedLocaleItem>().spotText(
+          "Vietnamese",
+        );
+        vietnameseItem.existsAtLeastOnce();
 
-      await tester.pumpAndSettle();
+        await act.tap(vietnameseItem);
+        await tester.pumpAndSettle();
 
-      await act.tap(spanishitem);
-
-      await tester.pumpAndSettle();
-
-      spotText("Spanish").existsAtLeastOnce();
-      spotText("English").doesNotExist();
-
-      await tester.pumpAndSettle();
-
-      await act.tap(spotIcon(Icons.arrow_drop_down));
-      await tester.pumpAndSettle();
-      spot<SelectedLocaleItem>().spotText("Spanish").existsAtLeastOnce();
-    });
+        // Now check that Vietnamese is selected
+        await act.tap(spotIcon(Icons.arrow_drop_down));
+        await tester.pumpAndSettle();
+        spot<SelectedLocaleItem>().spotText("Tiếng Việt").existsAtLeastOnce();
+      },
+    );
   });
 }

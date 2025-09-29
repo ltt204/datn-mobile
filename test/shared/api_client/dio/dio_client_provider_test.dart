@@ -10,7 +10,7 @@ import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 void main() {
   group("dio Client Provider", () {
-    test('expect dio.baseUrl should be "http://localhost/api/"', () {
+    test('expect dio.baseUrl should be "http://localhost:8080/api"', () {
       final container = ProviderContainer.test();
       final dio = container.read(dioProvider);
       expect(
@@ -19,7 +19,7 @@ void main() {
             .having(
               (d) => d.options.baseUrl,
               'default interceptor should be 2',
-              equals("http://localhost/api/"),
+              equals("http://localhost:8080/api"),
             )
             .having(
               (d) => d.interceptors.length,

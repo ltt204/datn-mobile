@@ -12,6 +12,8 @@ import 'package:datn_mobile/i18n/strings.g.dart';
 import 'package:datn_mobile/shared/pods/internet_checker_pod.dart';
 import 'package:datn_mobile/shared/pods/translation_pod.dart';
 
+import '../../../helpers/pump_app.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -34,7 +36,10 @@ void main() {
       );
       addTearDown(container.dispose);
 
-      await tester.pumpAndSettle();
+      await tester.pumpApp(
+        child: const Scaffold(body: ThemeSegmentedBtn()),
+        container: container,
+      );
       expect(find.byType(ThemeSegmentedBtn), findsOneWidget);
     });
     testWidgets('renderes ThemeSefementBtn with ThemeMode.System at Intial', (
@@ -50,10 +55,17 @@ void main() {
       );
       addTearDown(container.dispose);
 
-      await tester.pumpAndSettle();
+      await tester.pumpApp(
+        child: const Scaffold(body: ThemeSegmentedBtn()),
+        container: container,
+      );
       expect(find.byType(ThemeSegmentedBtn), findsOneWidget);
       expect(find.byIcon(Icons.brightness_auto), findsOneWidget);
-      expect(find.byIcon(Icons.check), findsOneWidget);
+      // The segmented button shows a selected state, not a check icon
+      final segmentedBtn = tester.widget<SegmentedButton<ThemeMode>>(
+        find.byType(SegmentedButton<ThemeMode>),
+      );
+      expect(segmentedBtn.selected.contains(ThemeMode.system), isTrue);
     });
 
     testWidgets(
@@ -69,14 +81,16 @@ void main() {
         );
         addTearDown(container.dispose);
 
-        await tester.pumpAndSettle();
+        await tester.pumpApp(
+          child: const Scaffold(body: ThemeSegmentedBtn()),
+          container: container,
+        );
         expect(find.byType(ThemeSegmentedBtn), findsOneWidget);
         expect(find.byIcon(Icons.light_mode), findsOneWidget);
-        await tester.runAsync(() async {
-          await tester.tap(find.byIcon(Icons.light_mode));
-          expect(container.read(themeSelectionPod).length, 1);
-          expect(container.read(themeSelectionPod), equals({ThemeMode.light}));
-        });
+        await tester.tap(find.byIcon(Icons.light_mode));
+        await tester.pumpAndSettle();
+        expect(container.read(themeSelectionPod).length, 1);
+        expect(container.read(themeSelectionPod), equals({ThemeMode.light}));
       },
     );
     testWidgets(
@@ -92,14 +106,16 @@ void main() {
         );
         addTearDown(container.dispose);
 
-        await tester.pumpAndSettle();
+        await tester.pumpApp(
+          child: const Scaffold(body: ThemeSegmentedBtn()),
+          container: container,
+        );
         expect(find.byType(ThemeSegmentedBtn), findsOneWidget);
         expect(find.byIcon(Icons.dark_mode), findsOneWidget);
-        await tester.runAsync(() async {
-          await tester.tap(find.byIcon(Icons.dark_mode));
-          expect(container.read(themeSelectionPod).length, 1);
-          expect(container.read(themeSelectionPod), equals({ThemeMode.dark}));
-        });
+        await tester.tap(find.byIcon(Icons.dark_mode));
+        await tester.pumpAndSettle();
+        expect(container.read(themeSelectionPod).length, 1);
+        expect(container.read(themeSelectionPod), equals({ThemeMode.dark}));
       },
     );
     testWidgets(
@@ -115,21 +131,23 @@ void main() {
         );
         addTearDown(container.dispose);
 
-        await tester.pumpAndSettle();
+        await tester.pumpApp(
+          child: const Scaffold(body: ThemeSegmentedBtn()),
+          container: container,
+        );
         expect(find.byType(ThemeSegmentedBtn), findsOneWidget);
         expect(find.byIcon(Icons.dark_mode), findsOneWidget);
         expect(find.byIcon(Icons.brightness_auto), findsOneWidget);
-        await tester.runAsync(() async {
-          await tester.tap(find.byIcon(Icons.dark_mode));
-          expect(container.read(themeSelectionPod).length, 1);
-          expect(container.read(themeSelectionPod), equals({ThemeMode.dark}));
-        });
-        await tester.pump();
-        await tester.runAsync(() async {
-          await tester.tap(find.byIcon(Icons.brightness_auto));
-          expect(container.read(themeSelectionPod).length, 1);
-          expect(container.read(themeSelectionPod), equals({ThemeMode.system}));
-        });
+
+        await tester.tap(find.byIcon(Icons.dark_mode));
+        await tester.pumpAndSettle();
+        expect(container.read(themeSelectionPod).length, 1);
+        expect(container.read(themeSelectionPod), equals({ThemeMode.dark}));
+
+        await tester.tap(find.byIcon(Icons.brightness_auto));
+        await tester.pumpAndSettle();
+        expect(container.read(themeSelectionPod).length, 1);
+        expect(container.read(themeSelectionPod), equals({ThemeMode.system}));
       },
     );
     testWidgets(
@@ -145,21 +163,23 @@ void main() {
         );
         addTearDown(container.dispose);
 
-        await tester.pumpAndSettle();
+        await tester.pumpApp(
+          child: const Scaffold(body: ThemeSegmentedBtn()),
+          container: container,
+        );
         expect(find.byType(ThemeSegmentedBtn), findsOneWidget);
         expect(find.byIcon(Icons.light_mode), findsOneWidget);
         expect(find.byIcon(Icons.brightness_auto), findsOneWidget);
-        await tester.runAsync(() async {
-          await tester.tap(find.byIcon(Icons.light_mode));
-          expect(container.read(themeSelectionPod).length, 1);
-          expect(container.read(themeSelectionPod), equals({ThemeMode.light}));
-        });
-        await tester.pump();
-        await tester.runAsync(() async {
-          await tester.tap(find.byIcon(Icons.brightness_auto));
-          expect(container.read(themeSelectionPod).length, 1);
-          expect(container.read(themeSelectionPod), equals({ThemeMode.system}));
-        });
+
+        await tester.tap(find.byIcon(Icons.light_mode));
+        await tester.pumpAndSettle();
+        expect(container.read(themeSelectionPod).length, 1);
+        expect(container.read(themeSelectionPod), equals({ThemeMode.light}));
+
+        await tester.tap(find.byIcon(Icons.brightness_auto));
+        await tester.pumpAndSettle();
+        expect(container.read(themeSelectionPod).length, 1);
+        expect(container.read(themeSelectionPod), equals({ThemeMode.system}));
       },
     );
     testWidgets(
@@ -175,21 +195,23 @@ void main() {
         );
         addTearDown(container.dispose);
 
-        await tester.pumpAndSettle();
+        await tester.pumpApp(
+          child: const Scaffold(body: ThemeSegmentedBtn()),
+          container: container,
+        );
         expect(find.byType(ThemeSegmentedBtn), findsOneWidget);
         expect(find.byIcon(Icons.light_mode), findsOneWidget);
         expect(find.byIcon(Icons.dark_mode), findsOneWidget);
-        await tester.runAsync(() async {
-          await tester.tap(find.byIcon(Icons.light_mode));
-          expect(container.read(themeSelectionPod).length, 1);
-          expect(container.read(themeSelectionPod), equals({ThemeMode.light}));
-        });
-        await tester.pump();
-        await tester.runAsync(() async {
-          await tester.tap(find.byIcon(Icons.dark_mode));
-          expect(container.read(themeSelectionPod).length, 1);
-          expect(container.read(themeSelectionPod), equals({ThemeMode.dark}));
-        });
+
+        await tester.tap(find.byIcon(Icons.light_mode));
+        await tester.pumpAndSettle();
+        expect(container.read(themeSelectionPod).length, 1);
+        expect(container.read(themeSelectionPod), equals({ThemeMode.light}));
+
+        await tester.tap(find.byIcon(Icons.dark_mode));
+        await tester.pumpAndSettle();
+        expect(container.read(themeSelectionPod).length, 1);
+        expect(container.read(themeSelectionPod), equals({ThemeMode.dark}));
       },
     );
   });

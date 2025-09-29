@@ -32,9 +32,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Verify Flutter installation
-        run: flutter doctor -v
-
       - name: Generate code
         run: |
           dart pub global activate build_runner
