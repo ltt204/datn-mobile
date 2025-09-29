@@ -1,6 +1,3 @@
-import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
-
 class Config {
   // main config
   static const String baseUrl = "http://localhost:8080/api";

@@ -2,92 +2,95 @@ name: CI
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
 
-    - name: Cache Flutter dependencies
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.pub-cache
-          ~/.dart_tool
-        key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-flutter-
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            ~/.dart_tool
+          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-flutter-
 
-    - name: Install dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Verify Flutter installation
-      run: flutter doctor -v
+      - name: Verify Flutter installation
+        run: flutter doctor -v
 
-    - name: Generate code
-      run: |
-        dart pub global activate build_runner
-        flutter packages pub run build_runner build --delete-conflicting-outputs
+      - name: Generate code
+        run: |
+          dart pub global activate build_runner
+          flutter packages pub run build_runner build --delete-conflicting-outputs
 
-    - name: Generate translations
-      run: flutter packages pub run slang
+      - name: Generate translations
+        run: flutter packages pub run slang
 
-    - name: Analyze code
-      run: flutter analyze
+      - name: Setup config file
+        run: cp lib/core/config/config.dart.sample lib/core/config/config.dart
 
-    - name: Check code formatting
-      run: dart format --set-exit-if-changed .
+      - name: Analyze code
+        run: flutter analyze
 
-    - name: Run flutter_pre_commit checks
-      run: |
-        dart pub global activate flutter_pre_commit
-        flutter_pre_commit
+      - name: Check code formatting
+        run: dart format --set-exit-if-changed .
 
-    - name: Run tests
-      run: flutter test --coverage
+      - name: Run flutter_pre_commit checks
+        run: |
+          dart pub global activate flutter_pre_commit
+          flutter_pre_commit
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: coverage/lcov.info
-        name: codecov-umbrella
-        fail_ci_if_error: false
+      - name: Run tests
+        run: flutter test --coverage
 
-    - name: Build APK (Android)
-      run: flutter build apk --release
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: coverage/lcov.info
+          name: codecov-umbrella
+          fail_ci_if_error: false
 
-    - name: Build iOS (no signing)
-      if: runner.os == 'macOS'
-      run: flutter build ios --release --no-codesign
+      - name: Build APK (Android)
+        run: flutter build apk --release
+
+      - name: Build iOS (no signing)
+        if: runner.os == 'macOS'
+        run: flutter build ios --release --no-codesign
 
   lint:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
 
-    - name: Install dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: Run custom lint
-      run: flutter packages pub run custom_lint
+      - name: Run custom lint
+        run: flutter packages pub run custom_lint
 
-    - name: Run riverpod lint
-      run: flutter packages pub run custom_lint --packages riverpod_lint
+      - name: Run riverpod lint
+        run: flutter packages pub run custom_lint --packages riverpod_lint
