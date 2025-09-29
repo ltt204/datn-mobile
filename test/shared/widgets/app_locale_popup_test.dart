@@ -25,67 +25,52 @@ void main() {
       appBox.clear();
     });
     testWidgets(
-        'renders Applocalepopup within default English should be selected ',
-        (tester) async {
-      final translation = AppLocale.en.buildSync();
-      final container = ProviderContainer(
-        overrides: [
-          enableInternetCheckerPod.overrideWith(
-            (ref) => false,
+      'renders Applocalepopup within default English should be selected ',
+      (tester) async {
+        final translation = AppLocale.en.buildSync();
+        final container = ProviderContainer(
+          overrides: [
+            enableInternetCheckerPod.overrideWith((ref) => false),
+            appBoxProvider.overrideWithValue(appBox),
+            translationsPod.overrideWith((ref) => translation),
+          ],
+        );
+
+        await tester.pumpApp(
+          child: const Scaffold(body: AppLocalePopUp()),
+          container: container,
+        );
+        expect(find.byType(AppLocalePopUp), findsOneWidget);
+        await tester.runAsync(() async {
+          await tester.tap(find.text("English"));
+          await tester.pump();
+        });
+
+        expect(find.byIcon(Icons.check), findsOneWidget);
+        expect(
+          find.widgetWithText(
+            SelectedLocaleItem,
+            'English',
+            skipOffstage: false,
           ),
-          appBoxProvider.overrideWithValue(appBox),
-          translationsPod.overrideWith(
-            (ref) => translation,
-          )
-        ],
-      );
-
-      await tester.pumpApp(
-        child: const Scaffold(
-          body: AppLocalePopUp(),
-        ),
-        container: container,
-      );
-      expect(find.byType(AppLocalePopUp), findsOneWidget);
-      await tester.runAsync(() async {
-        await tester.tap(find.text("English"));
-        await tester.pump();
-      });
-
-      expect(
-        find.byIcon(
-          Icons.check,
-        ),
-        findsOneWidget,
-      );
-      expect(
-        find.widgetWithText(
-          SelectedLocaleItem,
-          'English',
-          skipOffstage: false,
-        ),
-        findsOneWidget,
-      );
-    });
-    testWidgets('renders Applocalepopup within Spanish if selected Spanish ',
-        (tester) async {
+          findsOneWidget,
+        );
+      },
+    );
+    testWidgets('renders Applocalepopup within Spanish if selected Spanish ', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(1125, 1800);
       final translation = AppLocale.en.buildSync();
       final container = ProviderContainer(
         overrides: [
-          enableInternetCheckerPod.overrideWith(
-            (ref) => false,
-          ),
+          enableInternetCheckerPod.overrideWith((ref) => false),
           appBoxProvider.overrideWithValue(appBox),
-          translationsPod.overrideWith(
-            (ref) => translation,
-          )
+          translationsPod.overrideWith((ref) => translation),
         ],
       );
       await tester.pumpApp(
-        child: const Scaffold(
-          body: AppLocalePopUp(),
-        ),
+        child: const Scaffold(body: AppLocalePopUp()),
         container: container,
       );
       await tester.pumpAndSettle();

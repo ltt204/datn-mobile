@@ -5,7 +5,5 @@ import 'package:datn_mobile/splasher.dart';
 /// This entry point should be used for production only
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    const ProviderScope(child: Splasher()),
-  );
+  runApp(const ProviderScope(child: Splasher()));
 }

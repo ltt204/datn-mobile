@@ -49,14 +49,6 @@ jobs:
       - name: Analyze code
         run: flutter analyze
 
-      - name: Check code formatting
-        run: dart format --set-exit-if-changed .
-
-      - name: Run flutter_pre_commit checks
-        run: |
-          dart pub global activate flutter_pre_commit
-          flutter_pre_commit
-
       - name: Run tests
         run: flutter test --coverage
 

@@ -22,12 +22,12 @@ class Page1 extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const Page2(),
-              ));
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (context) => const Page2()));
             },
             child: const Text('Page A'),
-          )
+          ),
         ],
       ),
     );
@@ -74,7 +74,7 @@ class Page2 extends StatelessWidget {
               );
             },
             child: const Text('Subtract'),
-          )
+          ),
         ],
       ),
     );
@@ -124,67 +124,55 @@ class Page3 extends StatelessWidget {
 
 Future<void> main() async {
   group('Check riverpod extension', () {
-    testWidgets(
-      "Check cache",
-      (tester) async {
-        final providercontainer = ProviderContainer.test();
-        await tester.pumpWidget(
-          UncontrolledProviderScope(
-            container: providercontainer,
-            child: const MaterialApp(
-              home: Page1(),
-            ),
-          ),
-        );
-        await tester.pumpAndSettle();
-        expect(find.text('Page A'), findsOneWidget);
+    testWidgets("Check cache", (tester) async {
+      final providercontainer = ProviderContainer.test();
+      await tester.pumpWidget(
+        UncontrolledProviderScope(
+          container: providercontainer,
+          child: const MaterialApp(home: Page1()),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Page A'), findsOneWidget);
+      await tester.tap(find.text('Page A'));
+      await tester.pumpAndSettle();
+      expect(find.byType(Page2), findsOneWidget);
+      expect(find.text('0'), findsOneWidget);
+      await tester.tap(find.text('Add'));
+      await tester.pumpAndSettle();
+      expect(find.text('1'), findsOneWidget);
+
+      await tester.runAsync(() async {
+        await tester.pageBack();
+        await tester.pumpAndSettle(const Duration(seconds: 4));
+        await Future.delayed(const Duration(seconds: 4));
         await tester.tap(find.text('Page A'));
         await tester.pumpAndSettle();
         expect(find.byType(Page2), findsOneWidget);
         expect(find.text('0'), findsOneWidget);
-        await tester.tap(find.text('Add'));
-        await tester.pumpAndSettle();
-        expect(find.text('1'), findsOneWidget);
-
-        await tester.runAsync(() async {
-          await tester.pageBack();
-          await tester.pumpAndSettle(const Duration(seconds: 4));
-          await Future.delayed(const Duration(seconds: 4));
-          await tester.tap(find.text('Page A'));
-          await tester.pumpAndSettle();
-          expect(find.byType(Page2), findsOneWidget);
-          expect(find.text('0'), findsOneWidget);
-          expect(find.text('1'), findsNothing);
-        });
-        providercontainer.invalidate(cacheStateProvider);
-        await tester.pumpAndSettle();
-        expect(find.text('0'), findsOneWidget);
         expect(find.text('1'), findsNothing);
-      },
-    );
+      });
+      providercontainer.invalidate(cacheStateProvider);
+      await tester.pumpAndSettle();
+      expect(find.text('0'), findsOneWidget);
+      expect(find.text('1'), findsNothing);
+    });
 
-    testWidgets(
-      "Check auto refresh",
-      (tester) async {
-        await tester.pumpWidget(
-          const ProviderScope(
-            child: MaterialApp(
-              home: Page3(),
-            ),
-          ),
-        );
+    testWidgets("Check auto refresh", (tester) async {
+      await tester.pumpWidget(
+        const ProviderScope(child: MaterialApp(home: Page3())),
+      );
 
+      expect(find.text('5'), findsOneWidget);
+      await tester.tap(find.text('Add'));
+      await tester.pumpAndSettle();
+      expect(find.text('6'), findsOneWidget);
+
+      await tester.runAsync(() async {
+        await tester.pumpAndSettle(const Duration(seconds: 5));
         expect(find.text('5'), findsOneWidget);
-        await tester.tap(find.text('Add'));
-        await tester.pumpAndSettle();
-        expect(find.text('6'), findsOneWidget);
-
-        await tester.runAsync(() async {
-          await tester.pumpAndSettle(const Duration(seconds: 5));
-          expect(find.text('5'), findsOneWidget);
-          expect(find.text('6'), findsNothing);
-        });
-      },
-    );
+        expect(find.text('6'), findsNothing);
+      });
+    });
   });
 }

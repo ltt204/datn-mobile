@@ -22,8 +22,9 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
       context: context,
       barrierDismissible: barrierDismissible,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-      routeSettings:
-          routerName != null ? RouteSettings(name: routerName) : null,
+      routeSettings: routerName != null
+          ? RouteSettings(name: routerName)
+          : null,
       builder: (BuildContext buildContext) {
         final Widget pageChild = Builder(builder: builder);
         return SafeArea(
@@ -42,11 +43,7 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
     required WidgetBuilder builder,
   }) {
     _overlayEntry = OverlayEntry(
-      builder: (context) => SafeArea(
-        child: Builder(
-          builder: builder,
-        ),
-      ),
+      builder: (context) => SafeArea(child: Builder(builder: builder)),
     );
 
     Overlay.of(context).insert(_overlayEntry!);
@@ -56,10 +53,7 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
     required BuildContext context,
     required TickerProvider vsync,
   }) {
-    _animationController = AnimationController(
-      vsync: vsync,
-      value: 0,
-    );
+    _animationController = AnimationController(vsync: vsync, value: 0);
 
     showCustomOverlay(
       context: context,
@@ -104,9 +98,7 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
     );
   }
 
-  void hideBottomSheet({
-    required BuildContext context,
-  }) {
+  void hideBottomSheet({required BuildContext context}) {
     Navigator.of(context).pop();
   }
 
@@ -129,7 +121,8 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
           icon: const Icon(Icons.tips_and_updates_outlined),
           title: title,
           content: content,
-          actions: actions ??
+          actions:
+              actions ??
               [
                 TextButton(
                   onPressed: controller.dismiss,
@@ -141,7 +134,7 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
                     controller.dismiss();
                   },
                   child: const Text('Confirm'),
-                )
+                ),
               ],
         ),
       );
@@ -201,12 +194,12 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
         indicatorColor: indicatorColor,
         primaryActionBuilder: showCloseIcon
             ? primaryActionBuilder ??
-                (context, controller) {
-                  return IconButton(
-                    onPressed: controller.dismiss,
-                    icon: const Icon(Icons.close),
-                  );
-                }
+                  (context, controller) {
+                    return IconButton(
+                      onPressed: controller.dismiss,
+                      icon: const Icon(Icons.close),
+                    );
+                  }
             : null,
       );
     }
@@ -230,12 +223,12 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
         indicatorColor: indicatorColor,
         primaryActionBuilder: showCloseIcon
             ? primaryActionBuilder ??
-                (context, controller) {
-                  return IconButton(
-                    onPressed: controller.dismiss,
-                    icon: const Icon(Icons.close),
-                  );
-                }
+                  (context, controller) {
+                    return IconButton(
+                      onPressed: controller.dismiss,
+                      icon: const Icon(Icons.close),
+                    );
+                  }
             : null,
       );
     }
@@ -259,12 +252,12 @@ mixin GlobalHelper<T extends StatefulWidget> on State<T> {
         indicatorColor: indicatorColor,
         primaryActionBuilder: showCloseIcon
             ? primaryActionBuilder ??
-                (context, controller) {
-                  return IconButton(
-                    onPressed: controller.dismiss,
-                    icon: const Icon(Icons.close),
-                  );
-                }
+                  (context, controller) {
+                    return IconButton(
+                      onPressed: controller.dismiss,
+                      icon: const Icon(Icons.close),
+                    );
+                  }
             : null,
       );
     }
