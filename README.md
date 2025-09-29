@@ -90,22 +90,27 @@ dart pub global activate build_runner
 
 ```bash
 # One-time generation
-flutter packages pub run build_runner build
+dart run build_runner build
 
 # Generation with cleanup (removes conflicting outputs)
-flutter packages pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 
 # Watch mode (regenerates on file changes)
-flutter packages pub run build_runner watch
+dart run build_runner watch
 ```
 
 #### Generate translations:
 
 ```bash
-flutter packages pub run slang
+dart run slang
 ```
 
 ### 5. Running the Application
+
+#### Run with Vs Code:
+1. Open `main.dart` file.
+2. Press `F5` or go to the Run and Debug section and start debugging.
+3. Select the target device (if prompted).
 
 #### Development mode:
 
