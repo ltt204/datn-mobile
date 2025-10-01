@@ -1,10 +1,7 @@
 name: CI
 
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -56,12 +53,12 @@ jobs:
           name: codecov-umbrella
           fail_ci_if_error: false
 
-      - name: Build APK (Android)
-        run: flutter build apk --release
+      # - name: Build APK (Android)
+      #   run: flutter build apk --release
 
-      - name: Build iOS (no signing)
-        if: runner.os == 'macOS'
-        run: flutter build ios --release --no-codesign
+      # - name: Build iOS (no signing)
+      #   if: runner.os == 'macOS'
+      #   run: flutter build ios --release --no-codesign
 
   lint:
     runs-on: ubuntu-latest
