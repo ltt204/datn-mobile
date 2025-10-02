@@ -1,4 +1,4 @@
-.PHONY: help init clean get build-runner slang analyze format test run-dev run-prod build-apk build-ios hooks
+.PHONY: help init clean get build-runner slang slang-clean analyze format test run-dev run-prod build-apk build-ios hooks
 
 # Default target
 help:
@@ -8,6 +8,7 @@ help:
 	@echo "  make get          - Get Flutter dependencies"
 	@echo "  make build-runner - Run build_runner for code generation"
 	@echo "  make slang        - Run Slang for translations"
+	@echo "  make slang-clean  - Remove slang generated files"
 	@echo "  make analyze      - Analyze code for issues"
 	@echo "  make format       - Format code"
 	@echo "  make test         - Run tests"
@@ -39,6 +40,10 @@ build-runner:
 # Run Slang for translations
 slang:
 	@dart run slang
+
+# Clean slang generated files
+slang-clean:
+	@rm -f lib/i18n/*.g.dart
 
 # Analyze code
 analyze:
