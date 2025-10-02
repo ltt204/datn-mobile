@@ -32,7 +32,7 @@ class SettingView extends StatelessWidget {
             title: const SettingAppBarTitle(),
             actions: const [AppLocalePopUp()],
           ),
-          body: Center(
+          body: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
