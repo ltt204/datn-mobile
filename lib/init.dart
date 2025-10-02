@@ -11,12 +11,8 @@ Future<void> init() async {
   ]);
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.edgeToEdge,
-    overlays: [
-      SystemUiOverlay.top,
-    ],
+    overlays: [SystemUiOverlay.top],
   );
-  await platform.when(
-    android: FlutterDisplayMode.setHighRefreshRate,
-  );
+  await platform.when(android: FlutterDisplayMode.setHighRefreshRate);
   await SystemChannels.textInput.invokeMethod('TextInput.hide');
 }

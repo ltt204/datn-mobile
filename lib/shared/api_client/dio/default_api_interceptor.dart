@@ -6,9 +6,7 @@ import 'package:datn_mobile/shared/api_client/dio/default_api_error_handler.dart
 ///This one is default interceptor which includes default api
 ///error handler
 class DefaultAPIInterceptor extends Interceptor {
-  DefaultAPIInterceptor({
-    required this.dio,
-  });
+  DefaultAPIInterceptor({required this.dio});
   final Dio dio;
 
   @override
