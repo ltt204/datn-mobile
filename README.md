@@ -35,163 +35,183 @@ git clone <repository-url>
 cd datn_mobile
 ```
 
-### 2. Install Dependencies
+### 2. Quick Setup
 
-After cloning the repository, install all required dependencies:
+This project includes a Makefile and initialization script for easy setup.
 
+#### Option A: Using Makefile (Recommended)
+
+```bash
+make init
+```
+
+This will automatically:
+- Copy config sample if needed
+- Install Flutter dependencies
+- Setup pre-commit hooks
+- Run build_runner for code generation
+- Run Slang for translations
+- Analyze the project
+
+#### Option B: Manual Setup
+
+```bash
+# Make init script executable and run it
+chmod +x init.sh
+./init.sh
+```
+
+#### Option C: Step by Step
+
+1. Copy config file (if not exists):
+```bash
+cp lib/core/config/config.dart.sample lib/core/config/config.dart
+```
+
+2. Install dependencies:
 ```bash
 flutter pub get
 ```
 
-This command will:
-- Download all packages listed in `pubspec.yaml`
-- Install both main dependencies and dev dependencies
-- Set up the project for development
-
-### 3. Set Up flutter_pre_commit
-
-This project uses `flutter_pre_commit` to ensure code quality and consistency before commits.
-
-#### Install flutter_pre_commit globally:
-
+3. Setup pre-commit hooks:
 ```bash
 dart pub global activate flutter_pre_commit
-```
-
-#### Initialize pre-commit hooks:
-
-```bash
 flutter_pre_commit install
 ```
 
-#### Run pre-commit checks manually:
-
+4. Generate code:
 ```bash
-flutter_pre_commit
-```
-
-The pre-commit hook will automatically:
-- Format code using `dart format`
-- Run static analysis with `flutter analyze`
-- Check for linting issues
-- Run custom lints (riverpod_lint, custom_lint)
-
-### 4. Code Generation with build_runner
-
-This project uses `build_runner` for code generation (routes, JSON serialization, etc.).
-
-#### Install build_runner globally (recommended):
-
-```bash
-dart pub global activate build_runner
-```
-
-#### Generate code:
-
-```bash
-# One-time generation
 dart run build_runner build
-
-# Generation with cleanup (removes conflicting outputs)
-dart run build_runner build --delete-conflicting-outputs
-
-# Watch mode (regenerates on file changes)
-dart run build_runner watch
 ```
 
-#### Generate translations:
-
+5. Generate translations:
 ```bash
 dart run slang
 ```
 
-### 5. Running the Application
+### 3. Running the Application
 
-#### Run with Vs Code:
+#### Run with VS Code:
 1. Open `main.dart` file.
 2. Press `F5` or go to the Run and Debug section and start debugging.
 3. Select the target device (if prompted).
 
-#### Development mode:
+#### Using Makefile:
 
 ```bash
+# Run in debug mode
+make run-dev
+
+# Run in release mode
+make run-prod
+```
+
+#### Using Flutter CLI:
+
+```bash
+# Development mode
 flutter run
-```
 
-#### Debug mode with specific device:
-
-```bash
+# Debug mode with specific device
 flutter run -d <device_id>
-```
 
-#### Release mode:
-
-```bash
+# Release mode
 flutter run --release
 ```
 
-### 6. Testing
+### 4. Testing
 
-#### Run all tests:
+#### Using Makefile:
 
 ```bash
+make test
+```
+
+#### Using Flutter CLI:
+
+```bash
+# Run all tests
 flutter test
-```
 
-#### Run tests with coverage:
-
-```bash
+# Run tests with coverage
 flutter test --coverage
-```
 
-#### Run specific test file:
-
-```bash
+# Run specific test file
 flutter test test/path/to/test_file.dart
 ```
 
-### 7. Code Analysis and Formatting
+### 5. Code Analysis and Formatting
 
-#### Run static analysis:
+#### Using Makefile:
 
 ```bash
+# Run static analysis
+make analyze
+
+# Format code
+make format
+```
+
+#### Using Flutter CLI:
+
+```bash
+# Run static analysis
 flutter analyze
-```
 
-#### Format code:
-
-```bash
+# Format code
 dart format .
-```
 
-#### Run custom lints:
-
-```bash
-# Run all custom lints
+# Run custom lints
 flutter packages pub run custom_lint
 
 # Run specific lints
 flutter packages pub run custom_lint --packages riverpod_lint
 ```
 
-### 8. Building for Production
+### 6. Building for Production
 
-#### Android APK:
+#### Using Makefile:
 
 ```bash
+# Build Android APK
+make build-apk
+
+# Build iOS app
+make build-ios
+```
+
+#### Using Flutter CLI:
+
+```bash
+# Android APK
 flutter build apk --release
-```
 
-#### Android App Bundle:
-
-```bash
+# Android App Bundle
 flutter build appbundle --release
+
+# iOS (macOS only)
+flutter build ios --release
 ```
 
-#### iOS (macOS only):
+## Makefile Commands
+
+The project includes a Makefile for common tasks:
 
 ```bash
-flutter build ios --release
+make help          # Show all available commands
+make init          # Initialize project (run init.sh)
+make clean         # Clean build artifacts
+make get           # Get Flutter dependencies
+make build-runner  # Run build_runner for code generation
+make slang         # Run Slang for translations
+make analyze       # Analyze code for issues
+make format        # Format code
+make test          # Run tests
+make run-dev       # Run app in debug mode
+make run-prod      # Run app in release mode
+make build-apk     # Build Android APK
+make build-ios     # Build iOS app
+make hooks         # Setup pre-commit hooks
 ```
 
 ## Project Structure
@@ -208,10 +228,11 @@ lib/
 
 ## Development Workflow
 
-1. **Before starting development**: Run `flutter pub get` and `flutter packages pub run build_runner build`
-2. **Before committing**: Ensure `flutter_pre_commit` passes all checks
-3. **When adding new models/routes**: Run `flutter packages pub run build_runner build --delete-conflicting-outputs`
-4. **When updating translations**: Run `flutter packages pub run slang`
+1. **Before starting development**: Run `make init` or `make get && make build-runner`
+2. **Before committing**: Ensure `flutter_pre_commit` passes all checks (runs automatically)
+3. **When adding new models/routes**: Run `make build-runner`
+4. **When updating translations**: Run `make slang`
+5. **Clean build**: Run `make clean` then `make get`
 
 ## Continuous Integration
 
@@ -226,9 +247,9 @@ This project includes a GitHub Actions CI workflow that:
 ## Contributing
 
 1. Ensure all prerequisites are installed
-2. Run `flutter_pre_commit install` to set up pre-commit hooks
+2. Run `make init` to set up the project
 3. Make your changes
-4. Run tests and ensure they pass
+4. Run `make test` and `make analyze` to ensure they pass
 5. Commit your changes (pre-commit hooks will run automatically)
 6. Push and create a pull request
 
@@ -236,10 +257,11 @@ This project includes a GitHub Actions CI workflow that:
 
 ### Common Issues
 
-1. **Build runner conflicts**: Run `flutter packages pub run build_runner clean` then rebuild
-2. **Dependency conflicts**: Delete `pubspec.lock` and run `flutter pub get`
+1. **Build runner conflicts**: Run `make clean` then `make build-runner`
+2. **Dependency conflicts**: Delete `pubspec.lock` and run `make get`
 3. **Flutter doctor issues**: Run `flutter doctor` to diagnose setup problems
 4. **Pre-commit failures**: Run `flutter_pre_commit` manually to see detailed error messages
+5. **Clean rebuild**: Run `make clean` followed by `make init`
 
 ### Getting Help
 
