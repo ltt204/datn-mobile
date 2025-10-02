@@ -41,10 +41,13 @@ build-runner:
 slang:
 	@dart run slang
 
+<<<<<<< HEAD
 # Clean slang generated files
 slang-clean:
 	@rm -f lib/i18n/*.g.dart
 
+=======
+>>>>>>> cb1bea4 (chore: update readme; makefile)
 # Analyze code
 analyze:
 	@flutter analyze
