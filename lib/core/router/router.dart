@@ -8,5 +8,6 @@ class AppRouter extends RootStackRouter {
   late final List<AutoRoute> routes = [
     AutoRoute(page: ProjectsRoute.page, path: '/resources', children: []),
     AutoRoute(page: SettingRoute.page, path: '/settings', initial: true),
+    AutoRoute(page: WebviewRoute.page, path: '/webview'),
   ];
 }
