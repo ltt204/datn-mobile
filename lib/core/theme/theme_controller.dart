@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datn_mobile/core/local_storage/app_storage_pod.dart';
 
 ///This provider stores the ThemeModeController
-final themecontrollerProvider =
+final themeControllerProvider =
     NotifierProvider.autoDispose<ThemeModeController, ThemeMode>(
-  ThemeModeController.new,
-  name: 'themecontrollerProvider',
-);
+      ThemeModeController.new,
+      name: 'themecontrollerProvider',
+    );
 
 ///This controller class used change theme and
 ///get the intial theme from storage if its available

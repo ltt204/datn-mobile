@@ -22,9 +22,7 @@ final talker = TalkerFlutter.init(
   ),
   logger: TalkerLogger(
     output: debugPrint,
-    settings: TalkerLoggerSettings(
-      enableColors: !Platform.I.iOS,
-    ),
+    settings: TalkerLoggerSettings(enableColors: !Platform.I.iOS),
   ),
 );
 
@@ -40,10 +38,5 @@ Future<void> bootstrap(
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  runApp(
-    UncontrolledProviderScope(
-      container: parent,
-      child: await builder(),
-    ),
-  );
+  runApp(UncontrolledProviderScope(container: parent, child: await builder()));
 }
