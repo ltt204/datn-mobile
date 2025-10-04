@@ -115,7 +115,6 @@ class MainWrapperPage extends StatelessWidget {
               ),
               label: "",
             ),
-
             BottomNavigationBarItem(
               icon: _bottomItemActivated(
                 LucideIcons.user,
