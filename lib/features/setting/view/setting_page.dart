@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:datn_mobile/core/router/router_pod.dart';
 import 'package:datn_mobile/features/setting/widget/profile_picture.dart';
 import 'package:datn_mobile/features/setting/widget/setting_option.dart';
 import 'package:datn_mobile/features/setting/widget/setting_section.dart';
@@ -27,6 +28,7 @@ class SettingView extends StatelessWidget {
     return Consumer(
       builder: (context, ref, child) {
         final t = ref.watch(translationsPod);
+        final autorouter = ref.watch(autorouterProvider);
         return Scaffold(
           appBar: AppBar(
             title: const SettingAppBarTitle(),
@@ -106,7 +108,7 @@ class SettingView extends StatelessWidget {
                 const ThemeSegmentedBtn(),
                 ElevatedButton(
                   onPressed: () {
-                    context.router.pushPath('/resources');
+                    autorouter.pushPath('/settings');
                   },
                   child: const Text('Save'),
                 ),

@@ -6,7 +6,17 @@ import 'package:datn_mobile/core/router/router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   late final List<AutoRoute> routes = [
-    AutoRoute(page: ProjectsRoute.page, path: '/resources', children: []),
-    AutoRoute(page: SettingRoute.page, path: '/settings', initial: true),
+    AutoRoute(
+      page: MainWrapperRoute.page,
+      initial: true,
+      path: '/',
+      children: [
+        AutoRoute(page: PlaceholderRoute.page),
+        AutoRoute(page: ProjectsRoute.page, path: 'projects'),
+        AutoRoute(page: SettingRoute.page, path: 'settings'),
+        AutoRoute(page: PlaceholderRouteSchedule.page, path: 'schedules'),
+        AutoRoute(page: PlaceholderRouteAnnounce.page, path: 'announces'),
+      ],
+    ),
   ];
 }
