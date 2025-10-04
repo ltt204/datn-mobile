@@ -35,7 +35,7 @@ Future<void> defaultAPIErrorHandler(
         handler.resolve(
           Response(
             data: {
-              'detail': 'server error: status code ${err.response!.statusCode}'
+              'detail': 'server error: status code ${err.response!.statusCode}',
             },
             requestOptions: RequestOptions(path: err.requestOptions.path),
           ),

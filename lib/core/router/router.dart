@@ -7,13 +7,16 @@ class AppRouter extends RootStackRouter {
   @override
   late final List<AutoRoute> routes = [
     AutoRoute(
-      page: ResourcesRoute.page,
-      path: '/resources',
-    ),
-    AutoRoute(
-      page: SettingRoute.page,
-      path: '/settings',
+      page: MainWrapperRoute.page,
       initial: true,
+      path: '/',
+      children: [
+        AutoRoute(page: PlaceholderRoute.page),
+        AutoRoute(page: ProjectsRoute.page, path: 'projects'),
+        AutoRoute(page: SettingRoute.page, path: 'settings'),
+        AutoRoute(page: PlaceholderRouteSchedule.page, path: 'schedules'),
+        AutoRoute(page: PlaceholderRouteAnnounce.page, path: 'announces'),
+      ],
     ),
   ];
 }

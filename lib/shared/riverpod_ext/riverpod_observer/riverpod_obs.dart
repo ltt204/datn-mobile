@@ -46,14 +46,8 @@ final class TalkerRiverpodObserver extends ProviderObserver {
   final TalkerRiverpodLoggerSettings settings;
 
   @override
-  void didAddProvider(
-    ProviderObserverContext context,
-    Object? value,
-  ) {
-    super.didAddProvider(
-      context,
-      value,
-    );
+  void didAddProvider(ProviderObserverContext context, Object? value) {
+    super.didAddProvider(context, value);
     if (!settings.enabled || !settings.printProviderAdded) {
       return;
     }
@@ -95,9 +89,7 @@ final class TalkerRiverpodObserver extends ProviderObserver {
   }
 
   @override
-  void didDisposeProvider(
-    ProviderObserverContext context,
-  ) {
+  void didDisposeProvider(ProviderObserverContext context) {
     super.didDisposeProvider(context);
     if (!settings.enabled || !settings.printProviderDisposed) {
       return;
@@ -107,10 +99,7 @@ final class TalkerRiverpodObserver extends ProviderObserver {
       return;
     }
     _talker.logCustom(
-      RiverpodDisposeLog(
-        provider: context.provider,
-        settings: settings,
-      ),
+      RiverpodDisposeLog(provider: context.provider, settings: settings),
     );
   }
 
@@ -150,7 +139,9 @@ final class TalkerRiverpodObserver extends ProviderObserver {
 
   @override
   void mutationStart(
-      ProviderObserverContext context, Mutation<Object?> mutation) {
+    ProviderObserverContext context,
+    Mutation<Object?> mutation,
+  ) {
     _talker.logCustom(
       RiverpodMutationStart(
         provider: context.provider,
@@ -162,8 +153,11 @@ final class TalkerRiverpodObserver extends ProviderObserver {
   }
 
   @override
-  void mutationSuccess(ProviderObserverContext context,
-      Mutation<Object?> mutation, Object? result) {
+  void mutationSuccess(
+    ProviderObserverContext context,
+    Mutation<Object?> mutation,
+    Object? result,
+  ) {
     _talker.logCustom(
       RiverpodMutationUpdate(
         provider: context.provider,
@@ -176,8 +170,12 @@ final class TalkerRiverpodObserver extends ProviderObserver {
   }
 
   @override
-  void mutationError(ProviderObserverContext context,
-      Mutation<Object?> mutation, Object error, StackTrace stackTrace) {
+  void mutationError(
+    ProviderObserverContext context,
+    Mutation<Object?> mutation,
+    Object error,
+    StackTrace stackTrace,
+  ) {
     _talker.logCustom(
       RiverpodMutationError(
         provider: context.provider,
@@ -191,7 +189,9 @@ final class TalkerRiverpodObserver extends ProviderObserver {
 
   @override
   void mutationReset(
-      ProviderObserverContext context, Mutation<Object?> mutation) {
+    ProviderObserverContext context,
+    Mutation<Object?> mutation,
+  ) {
     _talker.logCustom(
       RiverpodMutationReset(
         provider: context.provider,
