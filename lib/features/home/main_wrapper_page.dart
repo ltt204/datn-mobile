@@ -18,7 +18,7 @@ class MainWrapperPage extends StatelessWidget {
   ) {
     if (isActive) {
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(50),
@@ -60,6 +60,7 @@ class MainWrapperPage extends StatelessWidget {
         PlaceholderRoute(),
         const ProjectsRoute(),
         PlaceholderRouteSchedule(),
+        PlaceholderRouteAnnounce(),
         const SettingRoute(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
