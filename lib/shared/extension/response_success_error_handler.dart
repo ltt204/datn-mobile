@@ -23,7 +23,7 @@ extension ResponseHandler on Response {
           APIException errorData =
               errorMapper?.call(data) ??
               APIException(
-                statusCode: statusCode,
+                code: statusCode,
                 errorMessage: 'Error parsing response data $e',
               );
           return Result<T, APIException>.error(errorData);
@@ -38,8 +38,8 @@ extension ResponseHandler on Response {
           errorData = APIException.fromMap(data);
         } catch (e) {
           errorData = APIException(
-            statusCode: statusCode,
-            statusMessage: statusMessage,
+            code: statusCode,
+            errorCode: statusMessage,
             errorMessage: "Failed to get data $data",
           );
         }

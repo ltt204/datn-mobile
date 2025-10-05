@@ -11,40 +11,43 @@ class BaseException implements Exception {
 
 ///This class used to throw error from API Providers
 class APIException implements BaseException {
-  final int? statusCode;
-  final String? statusMessage;
+  final int? code;
+  final String? errorCode;
   final String errorMessage;
+  final DateTime timestamp;
   APIException({
-    this.statusCode,
-    this.statusMessage,
+    this.code,
+    this.errorCode,
     required this.errorMessage,
-  });
+    DateTime? timestamp,
+  }) : timestamp = timestamp ?? DateTime.now();
 
-  APIException copyWith({
-    int? statusCode,
-    String? statusMessage,
-    String? errorMessage,
-  }) {
+  APIException copyWith({int? code, String? errorCode, String? errorMessage}) {
     return APIException(
-      statusCode: statusCode ?? this.statusCode,
-      statusMessage: statusMessage ?? this.statusMessage,
+      code: code ?? this.code,
+      errorCode: errorCode ?? this.errorCode,
       errorMessage: errorMessage ?? this.errorMessage,
+      timestamp: timestamp,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'statusCode': statusCode,
-      'statusMessage': statusMessage,
+      'statusCode': code,
+      'statusMessage': errorCode,
       'errorMessage': errorMessage,
+      'timestamp': timestamp.toString(),
     };
   }
 
   factory APIException.fromMap(Map<String, dynamic> map) {
     return APIException(
-      statusCode: map['statusCode']?.toInt(),
-      statusMessage: map['statusMessage'],
+      code: map['statusCode']?.toInt(),
+      errorCode: map['statusMessage'],
       errorMessage: map['errorMessage'] ?? '',
+      timestamp: map['timestamp'] != null
+          ? DateTime.parse(map['timestamp'])
+          : DateTime.now(),
     );
   }
 
@@ -55,21 +58,21 @@ class APIException implements BaseException {
 
   @override
   String toString() =>
-      'APIException(statusCode: $statusCode, statusMessage: $statusMessage, errorMessage: $errorMessage)';
+      'APIException(statusCode: $code, statusMessage: $errorCode, errorMessage: $errorMessage, timestamp: $timestamp)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is APIException &&
-        other.statusCode == statusCode &&
-        other.statusMessage == statusMessage &&
+        other.code == code &&
+        other.errorCode == errorCode &&
         other.errorMessage == errorMessage;
   }
 
   @override
   int get hashCode =>
-      statusCode.hashCode ^ statusMessage.hashCode ^ errorMessage.hashCode;
+      code.hashCode ^ errorCode.hashCode ^ errorMessage.hashCode;
 
   @override
   String get message => errorMessage;

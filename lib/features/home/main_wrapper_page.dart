@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:datn_mobile/core/router/router.gr.dart';
+import 'package:datn_mobile/shared/widget/no_internet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -17,7 +18,7 @@ class MainWrapperPage extends StatelessWidget {
   ) {
     if (isActive) {
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(50),
@@ -25,7 +26,12 @@ class MainWrapperPage extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+            Icon(
+              icon,
+              size: 24,
+              color: Theme.of(context).colorScheme.primary,
+              fill: 0.5,
+            ),
             const SizedBox(width: 6),
             Flexible(
               child: Text(
@@ -33,7 +39,6 @@ class MainWrapperPage extends StatelessWidget {
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w600,
-                  fontSize: 12,
                 ),
               ),
             ),
@@ -54,9 +59,8 @@ class MainWrapperPage extends StatelessWidget {
       routes: [
         PlaceholderRoute(),
         const ProjectsRoute(),
-        const SettingRoute(),
         PlaceholderRouteSchedule(),
-        PlaceholderRouteAnnounce(),
+        const SettingRoute(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return BottomNavigationBar(
@@ -74,7 +78,7 @@ class MainWrapperPage extends StatelessWidget {
                 context,
               ),
               activeIcon: _bottomItemActivated(
-                LucideIcons.house,
+                LucideIcons.house400,
                 "Home",
                 true,
                 context,
@@ -111,21 +115,7 @@ class MainWrapperPage extends StatelessWidget {
               ),
               label: "",
             ),
-            BottomNavigationBarItem(
-              icon: _bottomItemActivated(
-                LucideIcons.bell,
-                "Notification",
-                false,
-                context,
-              ),
-              activeIcon: _bottomItemActivated(
-                LucideIcons.bell,
-                "Notification",
-                true,
-                context,
-              ),
-              label: "",
-            ),
+
             BottomNavigationBarItem(
               icon: _bottomItemActivated(
                 LucideIcons.user,
@@ -144,6 +134,6 @@ class MainWrapperPage extends StatelessWidget {
           ],
         );
       },
-    );
+    ).monitorConnection();
   }
 }
