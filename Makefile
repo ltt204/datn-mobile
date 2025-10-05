@@ -41,10 +41,19 @@ build-runner:
 slang:
 	@dart run slang
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c7166a3 (chore: update makefile with slang)
 # Clean slang generated files
 slang-clean:
 	@rm -f lib/i18n/*.g.dart
 
+<<<<<<< HEAD
+=======
+>>>>>>> cb1bea4 (chore: update readme; makefile)
+=======
+>>>>>>> c7166a3 (chore: update makefile with slang)
 # Analyze code
 analyze:
 	@flutter analyze
