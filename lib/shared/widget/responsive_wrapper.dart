@@ -6,8 +6,11 @@ class ResponsiveBreakPointWrapper extends StatelessWidget {
 
   ///the initial frame 0 width and height issue is still present in the Flutter framework
   final Widget firstFrameWidget;
-  const ResponsiveBreakPointWrapper(
-      {super.key, required this.child, required this.firstFrameWidget});
+  const ResponsiveBreakPointWrapper({
+    super.key,
+    required this.child,
+    required this.firstFrameWidget,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +34,11 @@ class ResponsiveViewWrapper extends StatefulWidget {
 
   ///the initial frame 0 width and height issue is still present in the Flutter framework
   final Widget firstFrameWidget;
-  const ResponsiveViewWrapper(
-      {super.key, required this.child, required this.firstFrameWidget});
+  const ResponsiveViewWrapper({
+    super.key,
+    required this.child,
+    required this.firstFrameWidget,
+  });
 
   @override
   State<ResponsiveViewWrapper> createState() => _ResponsiveViewWrapperState();
@@ -50,12 +56,15 @@ class _ResponsiveViewWrapperState extends State<ResponsiveViewWrapper> {
       return MaxWidthBox(
         maxWidth: 3840,
         child: ResponsiveScaledBox(
-          width: ResponsiveValue<double>(context, conditionalValues: [
-            const Condition.equals(name: MOBILE, value: 440),
-            const Condition.equals(name: TABLET, value: 800),
-            const Condition.equals(name: DESKTOP, value: 1800),
-            const Condition.equals(name: '4K', value: 3840),
-          ]).value,
+          width: ResponsiveValue<double>(
+            context,
+            conditionalValues: [
+              const Condition.equals(name: MOBILE, value: 440),
+              const Condition.equals(name: TABLET, value: 800),
+              const Condition.equals(name: DESKTOP, value: 1800),
+              const Condition.equals(name: '4K', value: 3840),
+            ],
+          ).value,
           child: BouncingScrollWrapper.builder(
             context,
             widget.child,

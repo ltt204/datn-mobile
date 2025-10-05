@@ -6,13 +6,8 @@ import 'package:datn_mobile/shared/pods/internet_checker_pod.dart';
 
 ///No internet extension widget
 extension NoInternet on Widget {
-  Widget monitorConnection({
-    Widget? noInternetWidget,
-  }) {
-    return ConnectionMonitor(
-      noInternetWidget: noInternetWidget,
-      child: this,
-    );
+  Widget monitorConnection({Widget? noInternetWidget}) {
+    return ConnectionMonitor(noInternetWidget: noInternetWidget, child: this);
   }
 }
 
@@ -33,17 +28,18 @@ class ConnectionMonitor extends StatelessWidget {
         children: [
           child,
           Positioned(
-              left: 0.0,
-              right: 0.0,
-              top: 0.0,
-              child: AnimatedSize(
-                duration: Duration(milliseconds: 900),
-                curve: Curves.fastOutSlowIn,
-                alignment: Alignment.topCenter,
-                child: DefaultNoInternetWidget(
-                  noInternetWidget: noInternetWidget,
-                ),
-              ))
+            left: 0.0,
+            right: 0.0,
+            top: 0.0,
+            child: AnimatedSize(
+              duration: const Duration(milliseconds: 900),
+              curve: Curves.fastOutSlowIn,
+              alignment: Alignment.topCenter,
+              child: DefaultNoInternetWidget(
+                noInternetWidget: noInternetWidget,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -51,10 +47,7 @@ class ConnectionMonitor extends StatelessWidget {
 }
 
 class DefaultNoInternetWidget extends ConsumerStatefulWidget {
-  const DefaultNoInternetWidget({
-    super.key,
-    this.noInternetWidget,
-  });
+  const DefaultNoInternetWidget({super.key, this.noInternetWidget});
   final Widget? noInternetWidget;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -82,17 +75,14 @@ class _DefaultNoInternetState extends ConsumerState<DefaultNoInternetWidget> {
   @override
   Widget build(BuildContext context) {
     final statusAsync = ref.watch(internetCheckerNotifierPod);
-    ref.listen(
-      internetCheckerNotifierPod,
-      (previous, next) {
-        if (next is AsyncData) {
-          final status = next.value;
-          if (status != null) {
-            internetListener(status);
-          }
+    ref.listen(internetCheckerNotifierPod, (previous, next) {
+      if (next is AsyncData) {
+        final status = next.value;
+        if (status != null) {
+          internetListener(status);
         }
-      },
-    );
+      }
+    });
     return statusAsync.when(
       data: (status) {
         return Align(
@@ -100,23 +90,19 @@ class _DefaultNoInternetState extends ConsumerState<DefaultNoInternetWidget> {
           heightFactor: status == InternetStatus.disconnected ? 1.0 : 0.0,
           child: status == InternetStatus.disconnected
               ? SafeArea(
-                  child: ((widget.noInternetWidget) ??
+                  child:
+                      ((widget.noInternetWidget) ??
                       MaterialBanner(
                         content: const Text(
                           'No Internet Available',
-                          style: TextStyle(
-                            color: Colors.red,
-                          ),
+                          style: TextStyle(color: Colors.red),
                         ),
                         actions: [
                           ElevatedButton(
                             onPressed: () {
                               ref.invalidate(internetCheckerNotifierPod);
                             },
-                            child: const Text(
-                              'OK',
-                              key: ValueKey('OK_BUTTON'),
-                            ),
+                            child: const Text('OK', key: ValueKey('OK_BUTTON')),
                           ),
                         ],
                       )),
@@ -127,24 +113,15 @@ class _DefaultNoInternetState extends ConsumerState<DefaultNoInternetWidget> {
       error: (error, stackTrace) => Row(
         children: [
           Expanded(
-            child: Text(
-              "$error",
-              style: const TextStyle(
-                color: Colors.red,
-              ),
-            ),
+            child: Text("$error", style: const TextStyle(color: Colors.red)),
           ),
           Flexible(
             child: ElevatedButton(
-                onPressed: () {
-                  ref.invalidate(internetCheckerNotifierPod);
-                },
-                child: const Text(
-                  'Retry',
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                )),
+              onPressed: () {
+                ref.invalidate(internetCheckerNotifierPod);
+              },
+              child: const Text('Retry', style: TextStyle(color: Colors.red)),
+            ),
           ),
         ],
       ),

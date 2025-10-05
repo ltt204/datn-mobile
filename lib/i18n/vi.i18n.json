@@ -1,8 +1,11 @@
 {
     "locale": "vi",
     "locale_en": "Tiếng Anh",
-    "locale_es": "Tiếng Tây Ban Nha",
     "locale_vi": "Tiếng Việt",
     "counterAppBarTitle": "Bộ đếm",
-    "settingAppBarTitle": "Cài đặt"
+    "settingAppBarTitle": "Cài đặt",
+    "accountSetting": "Cài đặt tài khoản",
+    "personalInformation": "Thông tin cá nhân",
+    "passwordAndSecurity": "Mật khẩu và bảo mật",
+    "paymentMethods": "Phương thức thanh toán"
 }

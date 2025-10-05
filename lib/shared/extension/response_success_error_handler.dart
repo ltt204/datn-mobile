@@ -20,7 +20,8 @@ extension ResponseHandler on Response {
           T successData = successMapper(data);
           return Result<T, APIException>.success(successData);
         } catch (e) {
-          APIException errorData = errorMapper?.call(data) ??
+          APIException errorData =
+              errorMapper?.call(data) ??
               APIException(
                 statusCode: statusCode,
                 errorMessage: 'Error parsing response data $e',

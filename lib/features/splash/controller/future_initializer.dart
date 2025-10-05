@@ -10,8 +10,9 @@ import 'package:datn_mobile/core/local_storage/app_storage_pod.dart';
 import 'package:datn_mobile/features/splash/controller/box_encryption_key_pod.dart';
 import 'package:datn_mobile/init.dart';
 
-final futureInitializerPod =
-    FutureProvider.autoDispose<ProviderContainer>((ref) async {
+final futureInitializerPod = FutureProvider.autoDispose<ProviderContainer>((
+  ref,
+) async {
   ///Additional intial delay duration for app
   // await Future.delayed(const Duration(seconds: 1));
   await (init());
@@ -39,9 +40,7 @@ final futureInitializerPod =
   return ProviderContainer(
     overrides: [
       appBoxProvider.overrideWithValue(appBox),
-      translationsPod.overrideWith(
-        (ref) => translations,
-      ),
+      translationsPod.overrideWith((ref) => translations),
       enableInternetCheckerPod.overrideWithValue(false),
     ],
     observers: [
