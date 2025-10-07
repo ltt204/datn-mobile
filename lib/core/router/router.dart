@@ -6,6 +6,7 @@ import 'package:datn_mobile/core/router/router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   late final List<AutoRoute> routes = [
+<<<<<<< Updated upstream
     AutoRoute(
       page: MainWrapperRoute.page,
       initial: true,
@@ -18,5 +19,10 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: PlaceholderRouteAnnounce.page, path: 'announces'),
       ],
     ),
+=======
+    AutoRoute(page: ProjectsRoute.page, path: '/resources', children: []),
+    AutoRoute(page: SettingRoute.page, path: '/settings', initial: true),
+    AutoRoute(page: WebviewRoute.page, path: '/webview'),
+>>>>>>> Stashed changes
   ];
 }

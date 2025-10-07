@@ -56,6 +56,13 @@ class SettingView extends StatelessWidget {
                       title: t.paymentMethods,
                       nextPage: '/notification-settings',
                     ),
+                    SettingOption(
+                      title: "Web View",
+                      nextPage: '/webview',
+                      onTap: () {
+                        context.router.pushPath('/webview');
+                      },
+                    ),
                   ],
                 ),
                 const SettingSection(
