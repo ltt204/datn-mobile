@@ -1,9 +1,7 @@
 import 'package:auto_route/annotations.dart';
-import 'package:datn_mobile/features/projects/controllers/controller_provider.dart';
-import 'package:datn_mobile/features/projects/ui/widgets/presentation/presentation_card.dart';
-import 'package:datn_mobile/shared/riverpod_ext/async_value_easy_when.dart';
+import 'package:datn_mobile/features/projects/ui/widgets/common/projects_row.dart';
+import 'package:datn_mobile/features/projects/ui/widgets/resource/resource_list_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
 class ProjectsPage extends StatelessWidget {
@@ -13,13 +11,33 @@ class ProjectsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Presentations')),
-      body: _ProjectsView(),
-      // bottomNavigationBar: const CustomBottomAppBar(),
+      body: const _ProjectsView(),
     );
   }
 }
 
-class _ProjectsView extends StatelessWidget {
+class _ProjectsView extends StatefulWidget {
+  const _ProjectsView();
+
+  @override
+  State<_ProjectsView> createState() => _ProjectsViewState();
+}
+
+class _ProjectsViewState extends State<_ProjectsView> {
+  String? selectedResourceType;
+
+  void _onResourceTypeSelected(String resourceType) {
+    setState(() {
+      selectedResourceType = resourceType;
+    });
+  }
+
+  void _onBackToResourceTypes() {
+    setState(() {
+      selectedResourceType = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -51,57 +69,22 @@ class _ProjectsView extends StatelessWidget {
                     return ListTile(
                       title: Text(item),
                       onTap: () {
-                        // setState(() {
-                        //   controller.closeView(item);
-                        // });
+                        // TODO: Implement search functionality
                       },
                     );
                   });
                 },
           ),
           const SizedBox(height: 16),
-          const _ProjectsRow(),
+          Expanded(
+            child: selectedResourceType == null
+                ? ProjectsRow(onResourceTypeSelected: _onResourceTypeSelected)
+                : ResourceListView(
+                    resourceType: selectedResourceType!,
+                    onBack: _onBackToResourceTypes,
+                  ),
+          ),
         ],
-      ),
-    );
-  }
-}
-
-class _ProjectsRow extends ConsumerWidget {
-  const _ProjectsRow();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final presentationsAsync = ref.watch(presentationsControllerProvider);
-
-    return presentationsAsync.easyWhen(
-      data: (presentations) => RefreshIndicator(
-        onRefresh: () async {
-          await ref.read(presentationsControllerProvider.notifier).refresh();
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Your recently works',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: presentations
-                    .map(
-                      (presentation) => Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: PresentationCard(presentation: presentation),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
