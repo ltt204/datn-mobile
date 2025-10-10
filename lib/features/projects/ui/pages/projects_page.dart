@@ -2,16 +2,20 @@ import 'package:auto_route/auto_route.dart';
 import 'package:datn_mobile/core/router/router.gr.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/common/projects_row.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/resource/resource_list_view.dart';
+import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class ProjectsPage extends StatelessWidget {
+class ProjectsPage extends ConsumerWidget {
   const ProjectsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = ref.watch(translationsPod);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Presentations')),
+      appBar: AppBar(title: Text(t.projects.title)),
       body: const _ProjectsView(),
       floatingActionButton: SizedBox(
         width: 96,
@@ -42,14 +46,14 @@ class ProjectsPage extends StatelessWidget {
   }
 }
 
-class _ProjectsView extends StatefulWidget {
+class _ProjectsView extends ConsumerStatefulWidget {
   const _ProjectsView();
 
   @override
-  State<_ProjectsView> createState() => _ProjectsViewState();
+  ConsumerState<_ProjectsView> createState() => _ProjectsViewState();
 }
 
-class _ProjectsViewState extends State<_ProjectsView> {
+class _ProjectsViewState extends ConsumerState<_ProjectsView> {
   String? selectedResourceType;
 
   void _onResourceTypeSelected(String resourceType) {
@@ -66,6 +70,8 @@ class _ProjectsViewState extends State<_ProjectsView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = ref.watch(translationsPod);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
@@ -85,7 +91,7 @@ class _ProjectsViewState extends State<_ProjectsView> {
                   controller.openView();
                 },
                 leading: const Icon(Icons.search),
-                hintText: 'Search projects...',
+                hintText: t.projects.search_hint,
               );
             },
             suggestionsBuilder:

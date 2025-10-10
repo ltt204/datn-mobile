@@ -1,5 +1,6 @@
 import 'package:datn_mobile/features/projects/controllers/controller_provider.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/presentation/presentation_list_item.dart';
+import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:datn_mobile/shared/riverpod_ext/async_value_easy_when.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,16 +20,31 @@ class ResourceListView extends ConsumerStatefulWidget {
 }
 
 class _ResourceListViewState extends ConsumerState<ResourceListView> {
-  String _sortOption = 'Date Modified';
-  final List<String> _sortOptions = [
-    'Date Modified',
-    'Date Created',
-    'Name (A-Z)',
-    'Name (Z-A)',
-  ];
+  late String _sortOption;
+  late List<String> _sortOptions;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize with default value - will be updated in build
+    _sortOption = '';
+  }
 
   @override
   Widget build(BuildContext context) {
+    final t = ref.watch(translationsPod);
+
+    _sortOptions = [
+      t.projects.sort_date_modified,
+      t.projects.sort_date_created,
+      t.projects.sort_name_asc,
+      t.projects.sort_name_desc,
+    ];
+
+    if (_sortOption.isEmpty || !_sortOptions.contains(_sortOption)) {
+      _sortOption = t.projects.sort_date_modified;
+    }
+
     // Only show presentations list for "Presentations" resource type
     if (widget.resourceType != 'Presentations') {
       return Center(
@@ -38,14 +54,14 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
             Icon(Icons.construction, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
             Text(
-              '${widget.resourceType} coming soon',
+              t.projects.coming_soon(type: widget.resourceType),
               style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: widget.onBack,
               icon: const Icon(Icons.arrow_back),
-              label: const Text('Back to Resources'),
+              label: Text(t.projects.back_to_resources),
             ),
           ],
         ),
@@ -66,9 +82,12 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
                 onPressed: widget.onBack,
               ),
               const SizedBox(width: 8),
-              const Text(
-                'Your Presentations',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              Text(
+                t.projects.your_presentations,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -82,11 +101,11 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
                   onPressed: () {
                     // TODO: Implement filter functionality
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Filter coming soon')),
+                      SnackBar(content: Text(t.projects.filter_coming_soon)),
                     );
                   },
                   icon: const Icon(Icons.filter_list),
-                  label: const Text('Filter'),
+                  label: Text(t.projects.filter),
                 ),
               ),
               const SizedBox(width: 12),
@@ -138,7 +157,7 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'No presentations yet',
+                            t.projects.no_presentations,
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.grey.shade600,

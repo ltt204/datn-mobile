@@ -15,5 +15,38 @@
   "recentDocuments": "Recent Documents",
   "parentTeacherMeetings": "Parent-Teacher meetings",
   "todayAt": "Today at {time}",
-  "dueDate": "Due Date: {date}"
+  "dueDate": "Due Date: {date}",
+  "projects": {
+    "title": "Presentations",
+    "search_hint": "Search projects...",
+    "recently_works": "Your recently works",
+    "created_at": "Created at: $date",
+    "untitled": "Untitled",
+    "type": "Type: $type",
+    "refresh_error": "Failed to refresh presentations",
+    "load_error": "Failed to load presentations",
+    "resource_types": {
+      "image": "Image",
+      "presentation": "Presentation",
+      "mindmap": "Mind Map"
+    },
+    "type_of_resources": "Type of resources",
+    "your_presentations": "Your Presentations",
+    "filter": "Filter",
+    "filter_coming_soon": "Filter coming soon",
+    "sort": "Sort",
+    "sort_date_modified": "Date Modified",
+    "sort_date_created": "Date Created",
+    "sort_name_asc": "Name (A-Z)",
+    "sort_name_desc": "Name (Z-A)",
+    "no_presentations": "No presentations yet",
+    "back_to_resources": "Back to Resources",
+    "coming_soon": "$type coming soon",
+    "opening": "Opening $title",
+    "unknown_date": "Unknown date",
+    "minutes_ago": "$count minutes ago",
+    "hours_ago": "$count hours ago",
+    "yesterday": "Yesterday",
+    "days_ago": "$count days ago"
+  }
 }
