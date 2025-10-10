@@ -2,14 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 enum ResourceType {
-  image(value: "image", lucideIcon: LucideIcons.image),
-  presentation(value: 'presentation', lucideIcon: LucideIcons.presentation),
-  mindmap(value: 'mindmap', lucideIcon: LucideIcons.brainCircuit);
+  image(value: "image", lucideIcon: LucideIcons.image, translationKey: "image"),
+  presentation(
+    value: 'presentation',
+    lucideIcon: LucideIcons.presentation,
+    translationKey: "presentation",
+  ),
+  mindmap(
+    value: 'mindmap',
+    lucideIcon: LucideIcons.brainCircuit,
+    translationKey: "mindmap",
+  );
 
   final String value;
   final IconData lucideIcon;
+  final String translationKey;
 
-  const ResourceType({required this.value, required this.lucideIcon});
+  const ResourceType({
+    required this.value,
+    required this.lucideIcon,
+    required this.translationKey,
+  });
 
   String getValue() {
     return value;
