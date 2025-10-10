@@ -1,6 +1,7 @@
 import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class PresentationListItem extends ConsumerWidget {
   final dynamic presentation;
@@ -45,7 +46,7 @@ class PresentationListItem extends ConsumerWidget {
               ),
               child: Center(
                 child: Icon(
-                  Icons.slideshow,
+                  LucideIcons.presentation,
                   color: Colors.white.withValues(alpha: 0.7),
                   size: 32,
                 ),
@@ -76,7 +77,7 @@ class PresentationListItem extends ConsumerWidget {
             ),
             // More options
             IconButton(
-              icon: const Icon(Icons.more_vert),
+              icon: const Icon(LucideIcons.ellipsisVertical),
               onPressed: () {
                 // TODO: Show options menu
               },

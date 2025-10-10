@@ -5,6 +5,7 @@ import 'package:datn_mobile/features/projects/ui/widgets/resource/resource_list_
 import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 @RoutePage()
 class ProjectsPage extends ConsumerWidget {
@@ -90,7 +91,7 @@ class _ProjectsViewState extends ConsumerState<_ProjectsView> {
                 onChanged: (_) {
                   controller.openView();
                 },
-                leading: const Icon(Icons.search),
+                leading: const Icon(LucideIcons.search),
                 hintText: t.projects.search_hint,
               );
             },
