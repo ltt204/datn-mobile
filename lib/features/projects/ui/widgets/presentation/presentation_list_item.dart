@@ -1,17 +1,27 @@
+import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PresentationListItem extends StatelessWidget {
+class PresentationListItem extends ConsumerWidget {
   final dynamic presentation;
 
   const PresentationListItem({super.key, required this.presentation});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = ref.watch(translationsPod);
+
     return InkWell(
       onTap: () {
         // TODO: Navigate to presentation detail
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Opening ${presentation.title}')),
+          SnackBar(
+            content: Text(
+              t.projects.opening(
+                title: presentation.title ?? t.projects.untitled,
+              ),
+            ),
+          ),
         );
       },
       borderRadius: BorderRadius.circular(12),
@@ -48,7 +58,7 @@ class PresentationListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    presentation.title ?? 'Untitled',
+                    presentation.title ?? t.projects.untitled,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -58,7 +68,7 @@ class PresentationListItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    _formatDate(presentation.updatedAt),
+                    _formatDate(presentation.updatedAt, t),
                     style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                   ),
                 ],
@@ -86,20 +96,20 @@ class PresentationListItem extends StatelessWidget {
     }
   }
 
-  String _formatDate(DateTime? date) {
-    if (date == null) return 'Unknown date';
+  String _formatDate(DateTime? date, dynamic t) {
+    if (date == null) return t.projects.unknown_date;
     final now = DateTime.now();
     final difference = now.difference(date);
 
     if (difference.inDays == 0) {
       if (difference.inHours == 0) {
-        return '${difference.inMinutes} minutes ago';
+        return t.projects.minutes_ago(count: difference.inMinutes);
       }
-      return '${difference.inHours} hours ago';
+      return t.projects.hours_ago(count: difference.inHours);
     } else if (difference.inDays == 1) {
-      return 'Yesterday';
+      return t.projects.yesterday;
     } else if (difference.inDays < 7) {
-      return '${difference.inDays} days ago';
+      return t.projects.days_ago(count: difference.inDays);
     } else {
       return '${date.day}/${date.month}/${date.year}';
     }

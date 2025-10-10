@@ -1,6 +1,7 @@
 import 'package:datn_mobile/features/projects/controllers/controller_provider.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/presentation/presentation_card.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/resource/resource_types_list.dart';
+import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:datn_mobile/shared/riverpod_ext/async_value_easy_when.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,7 @@ class ProjectsRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final t = ref.watch(translationsPod);
     final presentationsAsync = ref.watch(presentationsControllerProvider);
 
     return presentationsAsync.easyWhen(
@@ -24,9 +26,12 @@ class ProjectsRow extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Your recently works',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              Text(
+                t.projects.recently_works,
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -42,9 +47,12 @@ class ProjectsRow extends ConsumerWidget {
                       .toList(),
                 ),
               ),
-              const Text(
-                'Type of resources',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              Text(
+                t.projects.type_of_resources,
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
               ResourceTypesList(onResourceTypeSelected: onResourceTypeSelected),
