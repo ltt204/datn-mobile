@@ -1,5 +1,6 @@
 import 'package:datn_mobile/features/projects/domain/entity/resource_type.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class ResourceTypeCard extends StatelessWidget {
   final ResourceType resourceType;
@@ -43,7 +44,7 @@ class ResourceTypeCard extends StatelessWidget {
             ),
             const Spacer(),
             Icon(
-              Icons.arrow_forward_ios,
+              LucideIcons.chevronRight,
               size: 16,
               color: Colors.grey.shade600,
             ),

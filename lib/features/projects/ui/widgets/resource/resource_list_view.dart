@@ -4,6 +4,7 @@ import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:datn_mobile/shared/riverpod_ext/async_value_easy_when.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class ResourceListView extends ConsumerStatefulWidget {
   final String resourceType;
@@ -51,7 +52,11 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.construction, size: 64, color: Colors.grey.shade400),
+            Icon(
+              LucideIcons.construction,
+              size: 64,
+              color: Colors.grey.shade400,
+            ),
             const SizedBox(height: 16),
             Text(
               t.projects.coming_soon(type: widget.resourceType),
@@ -60,7 +65,7 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: widget.onBack,
-              icon: const Icon(Icons.arrow_back),
+              icon: const Icon(LucideIcons.arrowLeft),
               label: Text(t.projects.back_to_resources),
             ),
           ],
@@ -78,7 +83,7 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(LucideIcons.arrowLeft),
                 onPressed: widget.onBack,
               ),
               const SizedBox(width: 8),
@@ -104,7 +109,7 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
                       SnackBar(content: Text(t.projects.filter_coming_soon)),
                     );
                   },
-                  icon: const Icon(Icons.filter_list),
+                  icon: const Icon(LucideIcons.listFilter),
                   label: Text(t.projects.filter),
                 ),
               ),
@@ -129,7 +134,7 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
                       .toList(),
                   child: OutlinedButton.icon(
                     onPressed: null,
-                    icon: const Icon(Icons.sort),
+                    icon: const Icon(LucideIcons.arrowUpDown),
                     label: Text(_sortOption),
                   ),
                 ),
@@ -151,7 +156,7 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.slideshow_outlined,
+                            LucideIcons.presentation,
                             size: 64,
                             color: Colors.grey.shade400,
                           ),
