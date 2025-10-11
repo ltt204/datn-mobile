@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:datn_mobile/shared/widget/attach_box.dart';
-import 'package:datn_mobile/shared/widget/expandable_box.dart';
+import 'package:datn_mobile/shared/widget/option_box.dart';
 import 'package:datn_mobile/shared/widget/header_bar.dart';
 import 'package:datn_mobile/shared/widget/option_field.dart';
 import 'package:datn_mobile/shared/widget/prompt_input_with_suggestions.dart';
@@ -49,7 +49,7 @@ class _PresentationPageState extends State<PresentationPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ExpandableBox(
+                    OptionBox(
                       title: 'Options',
                       showInfoDot: true,
                       onInfoTap: () {},

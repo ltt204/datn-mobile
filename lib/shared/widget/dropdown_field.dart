@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class FakeDropdown<T> extends StatelessWidget {
+class DropdownField<T> extends StatelessWidget {
   final T value;
   final List<T> items;
   final ValueChanged<T?> onChanged;
-  const FakeDropdown({
+  const DropdownField({
     super.key,
     required this.value,
     required this.items,
@@ -25,7 +25,10 @@ class FakeDropdown<T> extends StatelessWidget {
       initialValue: value,
       isExpanded: true,
       items: items
-          .map((e) => DropdownMenuItem<T>(value: e, child: Text('$e')))
+          .map((e) => DropdownMenuItem<T>(
+                value: e,
+                child: Text('$e'),
+              ))
           .toList(),
       onChanged: onChanged,
       menuMaxHeight: 300,

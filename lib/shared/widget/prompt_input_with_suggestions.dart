@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:datn_mobile/shared/widget/input_card.dart';
-import 'package:datn_mobile/shared/widget/pill.dart';
+import 'package:datn_mobile/shared/widget/sample_prompt.dart';
 
 class PromptInputWithSuggestions extends StatefulWidget {
   final TextEditingController controller;
@@ -48,7 +48,7 @@ class _PromptInputWithSuggestionsState
                   runSpacing: 10,
                   children: widget.suggestions
                       .map(
-                        (suggestion) => Pill(
+                        (suggestion) => SamplePrompt(
                           text: suggestion,
                           selected: selected.contains(suggestion),
                           visible: widget.controller.text.isEmpty,

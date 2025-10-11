@@ -3,7 +3,7 @@ import 'package:datn_mobile/shared/widget/box.dart';
 import 'package:datn_mobile/shared/widget/info_dot.dart';
 import 'package:datn_mobile/shared/widget/option_field.dart';
 
-class ExpandableBox extends StatefulWidget {
+class OptionBox extends StatefulWidget {
   final String title;
   final List<OptionRow> collapsedOptions;
   final List<OptionRow>? expandedOptions;
@@ -11,7 +11,7 @@ class ExpandableBox extends StatefulWidget {
   final VoidCallback? onInfoTap;
   final bool initiallyExpanded;
 
-  const ExpandableBox({
+  const OptionBox({
     super.key,
     required this.title,
     required this.collapsedOptions,
@@ -22,10 +22,10 @@ class ExpandableBox extends StatefulWidget {
   });
 
   @override
-  State<ExpandableBox> createState() => _ExpandableBoxState();
+  State<OptionBox> createState() => _OptionBoxState();
 }
 
-class _ExpandableBoxState extends State<ExpandableBox>
+class _OptionBoxState extends State<OptionBox>
     with SingleTickerProviderStateMixin {
   late bool isExpanded;
   late AnimationController _controller;

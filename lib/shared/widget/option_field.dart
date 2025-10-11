@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:datn_mobile/shared/widget/fake_dropdown.dart';
-import 'package:datn_mobile/shared/widget/labeled.dart';
+import 'package:datn_mobile/shared/widget/dropdown_field.dart';
 
 /// Base class for all option field types
 abstract class OptionFieldConfig {
@@ -10,6 +9,27 @@ abstract class OptionFieldConfig {
   const OptionFieldConfig({required this.label, this.key});
 
   Widget build(BuildContext context);
+
+  /// Helper method to build a labeled field layout
+  Widget buildWithLabel(BuildContext context, Widget child) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: isDark ? Colors.grey[400] : Colors.grey.shade700,
+            fontWeight: FontWeight.w500,
+            fontSize: 12,
+          ),
+        ),
+        const SizedBox(height: 6),
+        child,
+      ],
+    );
+  }
 }
 
 /// Selection/Dropdown option field
@@ -28,13 +48,9 @@ class SelectionOption extends OptionFieldConfig {
 
   @override
   Widget build(BuildContext context) {
-    return Labeled(
-      label: label,
-      child: FakeDropdown<String>(
-        value: value,
-        items: items,
-        onChanged: onChanged,
-      ),
+    return buildWithLabel(
+      context,
+      DropdownField<String>(value: value, items: items, onChanged: onChanged),
     );
   }
 }
@@ -60,9 +76,9 @@ class TextInputOption extends OptionFieldConfig {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cs = Theme.of(context).colorScheme;
 
-    return Labeled(
-      label: label,
-      child: TextField(
+    return buildWithLabel(
+      context,
+      TextField(
         controller: controller,
         maxLines: maxLines,
         keyboardType: keyboardType,

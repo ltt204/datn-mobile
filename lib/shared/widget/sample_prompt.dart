@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Pill extends StatefulWidget {
+class SamplePrompt extends StatefulWidget {
   final String text;
   final bool selected;
   final VoidCallback onTap;
   final bool visible;
-
-  const Pill({
+  
+  const SamplePrompt({
     super.key,
     required this.text,
     this.selected = false,
@@ -15,10 +15,10 @@ class Pill extends StatefulWidget {
   });
 
   @override
-  State<Pill> createState() => _PillState();
+  State<SamplePrompt> createState() => _SamplePromptState();
 }
 
-class _PillState extends State<Pill> with SingleTickerProviderStateMixin {
+class _SamplePromptState extends State<SamplePrompt> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -30,16 +30,14 @@ class _PillState extends State<Pill> with SingleTickerProviderStateMixin {
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-
-    _fadeAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.0,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.8,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    
+    _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+    
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.8).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
 
     if (!widget.visible) {
       _controller.value = 1.0;
@@ -47,7 +45,7 @@ class _PillState extends State<Pill> with SingleTickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(Pill oldWidget) {
+  void didUpdateWidget(SamplePrompt oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.visible != widget.visible) {
       if (widget.visible) {
