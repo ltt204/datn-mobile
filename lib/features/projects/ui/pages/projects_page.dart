@@ -1,4 +1,5 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:datn_mobile/core/router/router.gr.dart';
 import 'package:datn_mobile/features/projects/controllers/controller_provider.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/presentation/presentation_card.dart';
 import 'package:datn_mobile/shared/riverpod_ext/async_value_easy_when.dart';
@@ -14,6 +15,12 @@ class ProjectsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Presentations')),
       body: _ProjectsView(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.router.push(const PresentationRoute());
+        },
+        child: const Icon(Icons.add),
+      ),
       // bottomNavigationBar: const CustomBottomAppBar(),
     );
   }
