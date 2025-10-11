@@ -1,12 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:datn_mobile/shared/widget/attach_box.dart';
-import 'package:datn_mobile/shared/widget/box.dart';
-import 'package:datn_mobile/shared/widget/fake_dropdown.dart';
+import 'package:datn_mobile/shared/widget/expandable_box.dart';
 import 'package:datn_mobile/shared/widget/header_bar.dart';
-import 'package:datn_mobile/shared/widget/info_dot.dart';
-import 'package:datn_mobile/shared/widget/input_card.dart';
-import 'package:datn_mobile/shared/widget/labeled.dart';
-import 'package:datn_mobile/shared/widget/pill.dart';
+import 'package:datn_mobile/shared/widget/option_field.dart';
+import 'package:datn_mobile/shared/widget/prompt_input_with_suggestions.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -18,21 +15,22 @@ class PresentationPage extends StatefulWidget {
 
 class _PresentationPageState extends State<PresentationPage> {
   String model = 'Fast model';
-  String promptStyle = 'Concise';
+  String grade = 'Grade 1';
+  String theme = 'Lorems';
   final TextEditingController describeCtl = TextEditingController();
+  final TextEditingController avoidCtl = TextEditingController();
+  final TextEditingController slidesCtl = TextEditingController();
 
   final List<String> chips = const [
-    '0 day',
-    'Trong tin',
-    'Khong biet',
-    'Nhu nao',
-    'Add',
-    'Se la mot vai',
-    'Cai example',
-    'Add',
+    'Introduction to AI and Machine Learning',
+    'Climate Change and Environmental Impact',
+    'Digital Marketing Strategy',
+    'Healthy Lifestyle and Nutrition',
+    'History of Ancient Civilizations',
+    'Modern Web Development',
+    'Financial Planning for Beginners',
+    'Space Exploration and Technology',
   ];
-
-  final Set<String> selected = {};
 
   @override
   Widget build(BuildContext context) {
@@ -51,72 +49,12 @@ class _PresentationPageState extends State<PresentationPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Box(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                'Options',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              InfoDot(onTap: () {}),
-                              const Spacer(),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Text(
-                                  'Show advanced',
-                                  style: TextStyle(
-                                    color: cs.primary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Labeled(
-                                  label: 'Model',
-                                  child: FakeDropdown<String>(
-                                    value: model,
-                                    items: const [
-                                      'Fast model',
-                                      'Balanced model',
-                                      'Accurate model',
-                                    ],
-                                    onChanged: (v) =>
-                                        setState(() => model = v!),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Labeled(
-                                  label: 'Prompt style',
-                                  child: FakeDropdown<String>(
-                                    value: promptStyle,
-                                    items: const [
-                                      'Concise',
-                                      'Detailed',
-                                      'Creative',
-                                    ],
-                                    onChanged: (v) =>
-                                        setState(() => promptStyle = v!),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    ExpandableBox(
+                      title: 'Options',
+                      showInfoDot: true,
+                      onInfoTap: () {},
+                      collapsedOptions: _buildBasicOptions(),
+                      expandedOptions: _buildAdvancedOptions(),
                     ),
                     const SizedBox(height: 20),
                     const Text(
@@ -127,33 +65,12 @@ class _PresentationPageState extends State<PresentationPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    InputCard(
+                    PromptInputWithSuggestions(
                       controller: describeCtl,
                       hint: 'Describe your video...',
+                      suggestions: chips,
                     ),
-                    const SizedBox(height: 12),
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: chips
-                          .map(
-                            (c) => Pill(
-                              text: (c == 'Add') ? '+ Add' : '+ $c',
-                              selected: selected.contains(c),
-                              onTap: () {
-                                setState(() {
-                                  if (selected.contains(c)) {
-                                    selected.remove(c);
-                                  } else {
-                                    selected.add(c);
-                                  }
-                                });
-                              },
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: describeCtl.text.isEmpty ? 20 : 8),
                     AttachBox(onAdd: () {}),
                   ],
                 ),
@@ -183,5 +100,49 @@ class _PresentationPageState extends State<PresentationPage> {
         ),
       ),
     );
+  }
+
+  List<OptionRow> _buildBasicOptions() {
+    return [
+      OptionRow(
+        first: SelectionOption(
+          label: 'Model',
+          value: model,
+          items: const ['Fast model', 'Balanced model', 'Accurate model'],
+          onChanged: (v) => setState(() => model = v!),
+        ),
+        second: TextInputOption(
+          label: 'Slides',
+          controller: slidesCtl,
+          hint: 'Number of slides...',
+        ),
+      ),
+    ];
+  }
+
+  List<OptionRow> _buildAdvancedOptions() {
+    return [
+      OptionRow(
+        first: SelectionOption(
+          label: 'Grade',
+          value: grade,
+          items: const ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5'],
+          onChanged: (v) => setState(() => grade = v!),
+        ),
+        second: SelectionOption(
+          label: 'Themes',
+          value: theme,
+          items: const ['Lorems', 'Modern', 'Classic', 'Minimal'],
+          onChanged: (v) => setState(() => theme = v!),
+        ),
+      ),
+      OptionRow(
+        first: TextInputOption(
+          label: 'What to avoid in the image',
+          controller: avoidCtl,
+          hint: 'Blood, Xuanpac...',
+        ),
+      ),
+    ];
   }
 }

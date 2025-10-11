@@ -23,10 +23,12 @@ class FakeDropdown<T> extends StatelessWidget {
 
     return DropdownButtonFormField<T>(
       initialValue: value,
+      isExpanded: true,
       items: items
           .map((e) => DropdownMenuItem<T>(value: e, child: Text('$e')))
           .toList(),
       onChanged: onChanged,
+      menuMaxHeight: 300,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(
@@ -38,12 +40,15 @@ class FakeDropdown<T> extends StatelessWidget {
         focusedBorder: border.copyWith(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
-        suffixIcon: const Padding(
-          padding: EdgeInsets.only(right: 8),
-          child: Text('▾', textAlign: TextAlign.center),
+        suffixIcon: Icon(
+          Icons.keyboard_arrow_down_rounded,
+          size: 24,
+          color: isDark ? Colors.grey[400] : Colors.grey[600],
         ),
-        suffixIconConstraints: const BoxConstraints.tightFor(width: 30),
       ),
+      style: Theme.of(context).textTheme.bodyMedium,
+      dropdownColor: isDark ? Colors.grey[850] : Colors.white,
+      iconSize: 0, // Hide default icon since we use custom suffixIcon
     );
   }
 }
