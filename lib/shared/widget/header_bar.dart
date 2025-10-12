@@ -13,14 +13,14 @@ class HeaderBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w600);
+    const textStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w600);
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
       child: Row(
         children: [
           GestureDetector(
             onTap: onBack,
-            child: const _Glyph(text: '‹'),
+            child: const _Glyph(text: '‹', fontSize: 28),
           ),
           const SizedBox(width: 6),
           const Expanded(
@@ -30,14 +30,14 @@ class HeaderBar extends StatelessWidget {
                 children: [
                   Text('Presentation', style: textStyle),
                   SizedBox(width: 4),
-                  _Glyph(text: '▾'),
+                  _Glyph(text: '▾', fontSize: 28),
                 ],
               ),
             ),
           ),
           GestureDetector(
             onTap: onHelp,
-            child: const _Glyph(text: '？'),
+            child: const _Glyph(text: '？', fontSize: 28),
           ),
         ],
       ),
@@ -47,7 +47,10 @@ class HeaderBar extends StatelessWidget {
 
 class _Glyph extends StatelessWidget {
   final String text;
-  const _Glyph({required this.text});
+  final double fontSize;
+
+  const _Glyph({required this.text, this.fontSize = 20});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,7 +61,7 @@ class _Glyph extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         color: Colors.transparent,
       ),
-      child: Text(text, style: const TextStyle(fontSize: 20, height: 1.0)),
+      child: Text(text, style: TextStyle(fontSize: fontSize, height: 1.0)),
     );
   }
 }

@@ -42,7 +42,11 @@ class _PresentationPageState extends State<PresentationPage> {
       body: SafeArea(
         child: Column(
           children: [
-            HeaderBar(title: 'Presentation', onBack: () {}, onHelp: () {}),
+            HeaderBar(
+              title: 'Presentation',
+              onBack: () => context.router.maybePop(),
+              onHelp: () {},
+            ),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),

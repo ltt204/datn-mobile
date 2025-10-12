@@ -15,11 +15,25 @@ class ProjectsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Presentations')),
       body: _ProjectsView(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.router.push(const PresentationRoute());
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: SizedBox(
+        width: 96,
+        height: 96,
+        child: FloatingActionButton(
+          onPressed: () {
+            context.router.push(const PresentationRoute());
+          },
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          shape: const CircleBorder(),
+          child: ClipOval(
+            child: Image.asset(
+              'assets/floating_button_icon.png',
+              width: 96,
+              height: 96,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ),
       // bottomNavigationBar: const CustomBottomAppBar(),
     );
