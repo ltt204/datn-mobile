@@ -7,5 +7,13 @@
   "accountSetting": "Account Setting",
   "personalInformation": "Personal Information",
   "passwordAndSecurity": "Password and Security",
-  "paymentMethods": "Payment Methods"
+  "paymentMethods": "Payment Methods",
+  "homeGreeting": "Hello!",
+  "upgradePlan": "Upgrade plan",
+  "todayWorks": "Today Works!",
+  "myClasses": "My Classes",
+  "recentDocuments": "Recent Documents",
+  "parentTeacherMeetings": "Parent-Teacher meetings",
+  "todayAt": "Today at {time}",
+  "dueDate": "Due Date: {date}"
 }

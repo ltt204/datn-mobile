@@ -11,7 +11,7 @@ class AppRouter extends RootStackRouter {
       initial: true,
       path: '/',
       children: [
-        AutoRoute(page: PlaceholderRoute.page),
+        AutoRoute(page: HomeRoute.page),
         AutoRoute(page: ProjectsRoute.page, path: 'projects'),
         AutoRoute(page: SettingRoute.page, path: 'settings'),
         AutoRoute(page: PlaceholderRouteSchedule.page, path: 'schedules'),

@@ -1,11 +1,19 @@
 {
-    "locale": "vi",
-    "locale_en": "Tiếng Anh",
-    "locale_vi": "Tiếng Việt",
-    "counterAppBarTitle": "Bộ đếm",
-    "settingAppBarTitle": "Cài đặt",
-    "accountSetting": "Cài đặt tài khoản",
-    "personalInformation": "Thông tin cá nhân",
-    "passwordAndSecurity": "Mật khẩu và bảo mật",
-    "paymentMethods": "Phương thức thanh toán"
+  "locale": "vi",
+  "locale_en": "Tiếng Anh",
+  "locale_vi": "Tiếng Việt",
+  "counterAppBarTitle": "Bộ đếm",
+  "settingAppBarTitle": "Cài đặt",
+  "accountSetting": "Cài đặt tài khoản",
+  "personalInformation": "Thông tin cá nhân",
+  "passwordAndSecurity": "Mật khẩu và bảo mật",
+  "paymentMethods": "Phương thức thanh toán",
+  "homeGreeting": "Xin chào!",
+  "upgradePlan": "Nâng cấp gói",
+  "todayWorks": "Công việc hôm nay!",
+  "myClasses": "Lớp học của tôi",
+  "recentDocuments": "Tài liệu gần đây",
+  "parentTeacherMeetings": "Họp phụ huynh - giáo viên",
+  "todayAt": "Hôm nay lúc {time}",
+  "dueDate": "Hạn nộp: {date}"
 }
