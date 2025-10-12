@@ -25,6 +25,10 @@ class ProjectsPage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
           shape: const CircleBorder(),
+          splashColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          highlightElevation: 0,
           child: ClipOval(
             child: Image.asset(
               'assets/floating_button_icon.png',
