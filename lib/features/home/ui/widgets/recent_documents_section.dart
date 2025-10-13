@@ -22,7 +22,7 @@ class RecentDocumentsSection extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         SizedBox(
-          height: 225,
+          height: 180,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: [
@@ -98,7 +98,7 @@ class RecentDocumentsSection extends ConsumerWidget {
             ),
             // File name and description
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
