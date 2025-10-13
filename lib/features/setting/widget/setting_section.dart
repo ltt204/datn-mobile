@@ -21,14 +21,15 @@ class SettingSection extends StatelessWidget {
               child: Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey,
                 ),
               ),
             ),
             subtitle: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).secondaryHeaderColor,
+                color: Theme.of(context).secondaryHeaderColor.withAlpha(50),
                 borderRadius: const BorderRadius.all(Radius.circular(24)),
               ),
               child: Column(

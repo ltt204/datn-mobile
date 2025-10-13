@@ -9,7 +9,7 @@ class ProfilePicture extends StatelessWidget {
   const ProfilePicture({
     super.key,
     // required this.imageUrl,
-    this.size = 100.0,
+    this.size = 50.0,
   });
 
   @override

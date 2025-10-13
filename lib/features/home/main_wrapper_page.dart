@@ -60,7 +60,6 @@ class MainWrapperPage extends StatelessWidget {
         const HomeRoute(),
         const ProjectsRoute(),
         PlaceholderRouteSchedule(),
-        PlaceholderRouteAnnounce(),
         const SettingRoute(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {

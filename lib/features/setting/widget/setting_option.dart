@@ -21,10 +21,19 @@ class SettingOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      leading: icon != null
-          ? Icon(icon, size: 24, color: Theme.of(context).primaryColor)
-          : null,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      leading: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Icon(
+          icon ?? Icons.settings,
+          size: 24,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
       subtitle: subtitle != null
           ? Text(

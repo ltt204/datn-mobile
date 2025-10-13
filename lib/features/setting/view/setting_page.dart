@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datn_mobile/features/setting/widget/theme_segmented_btn.dart';
 import 'package:datn_mobile/shared/widget/app_locale_popup.dart';
 import 'package:datn_mobile/shared/pods/translation_pod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 @RoutePage()
 class SettingPage extends StatelessWidget {
@@ -46,15 +47,18 @@ class SettingView extends StatelessWidget {
                   options: [
                     SettingOption(
                       title: t.personalInformation,
-                      nextPage: '/change-password',
+                      nextPage: '/personal-information',
+                      icon: LucideIcons.user,
                     ),
                     SettingOption(
                       title: t.passwordAndSecurity,
-                      nextPage: '/privacy-settings',
+                      nextPage: '/password-and-security',
+                      icon: LucideIcons.lock,
                     ),
                     SettingOption(
                       title: t.paymentMethods,
-                      nextPage: '/notification-settings',
+                      nextPage: '/payment-methods',
+                      icon: LucideIcons.creditCard,
                     ),
                   ],
                 ),
@@ -63,15 +67,18 @@ class SettingView extends StatelessWidget {
                   options: [
                     SettingOption(
                       title: 'Notifications',
-                      nextPage: '/change-password',
+                      nextPage: '/notification-settings',
+                      icon: LucideIcons.bell,
                     ),
                     SettingOption(
                       title: 'Language',
-                      nextPage: '/privacy-settings',
+                      nextPage: '/language-settings',
+                      icon: LucideIcons.earth,
                     ),
                     SettingOption(
                       title: 'Theme',
-                      nextPage: '/notification-settings',
+                      nextPage: '/theme-settings',
+                      icon: LucideIcons.palette,
                     ),
                   ],
                 ),
@@ -80,11 +87,13 @@ class SettingView extends StatelessWidget {
                   options: [
                     SettingOption(
                       title: 'Help Center',
-                      nextPage: '/change-password',
+                      nextPage: '/help-center',
+                      icon: LucideIcons.headphones,
                     ),
                     SettingOption(
                       title: 'Contact Us',
-                      nextPage: '/privacy-settings',
+                      nextPage: '/contact-us',
+                      icon: LucideIcons.mail,
                     ),
                   ],
                 ),
@@ -136,17 +145,24 @@ class SettingProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
+    return Stack(
       alignment: Alignment.center,
       children: [
-        ProfilePicture(size: 120),
+        const ProfilePicture(size: 100),
         Positioned(
           bottom: 0,
           right: 0,
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.blue,
-            child: Icon(Icons.camera_alt, color: Colors.white),
+          height: 32,
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 2),
+            ),
+            child: const CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.blue,
+              child: Icon(LucideIcons.pencil, color: Colors.white, size: 12),
+            ),
           ),
         ),
       ],
