@@ -7,6 +7,7 @@ class Themes {
   static ThemeData get theme => FlexThemeData.light(
     scheme: FlexScheme.brandBlue,
     surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
+    lightIsWhite: true,
     blendLevel: 20,
     appBarOpacity: 0.95,
     swapColors: true,
