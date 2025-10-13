@@ -19,6 +19,7 @@
     "projects": {
         "title": "Bài thuyết trình",
         "search_hint": "Tìm kiếm dự án...",
+        "search_presentations": "Tìm kiếm bài thuyết trình...",
         "recently_works": "Các công việc gần đây của bạn",
         "created_at": "Tạo lúc: $date",
         "untitled": "Chưa đặt tên",

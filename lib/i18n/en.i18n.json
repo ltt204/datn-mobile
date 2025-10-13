@@ -19,6 +19,7 @@
   "projects": {
     "title": "Presentations",
     "search_hint": "Search projects...",
+    "search_presentations": "Search presentations...",
     "recently_works": "Your recently works",
     "created_at": "Created at: $date",
     "untitled": "Untitled",

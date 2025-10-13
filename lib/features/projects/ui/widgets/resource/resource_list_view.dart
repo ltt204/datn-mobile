@@ -100,42 +100,69 @@ class _ResourceListViewState extends ConsumerState<ResourceListView> {
           // Filter and Sort bar
           Row(
             children: [
-              // Filter button
+              // Filter button group - left side
               Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: () {
-                    // TODO: Implement filter functionality
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(t.projects.filter_coming_soon)),
-                    );
-                  },
-                  icon: const Icon(LucideIcons.listFilter),
-                  label: Text(t.projects.filter),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Main filter button
+                    OutlinedButton(
+                      onPressed: () {
+                        // TODO: Implement filter functionality
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(t.projects.filter_coming_soon),
+                          ),
+                        );
+                      },
+                      child: const Icon(LucideIcons.listFilter),
+                    ),
+                    const SizedBox(width: 8),
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        // TODO: Clear status filter
+                      },
+                      icon: const Icon(LucideIcons.x, size: 16),
+                      label: const Text('Active'),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(width: 12),
-              // Sort dropdown
-              Expanded(
-                child: PopupMenuButton<String>(
-                  initialValue: _sortOption,
-                  onSelected: (String value) {
-                    setState(() {
-                      _sortOption = value;
-                    });
-                    // TODO: Implement sort functionality
-                  },
-                  itemBuilder: (BuildContext context) => _sortOptions
-                      .map(
-                        (option) => PopupMenuItem<String>(
-                          value: option,
-                          child: Text(option),
-                        ),
-                      )
-                      .toList(),
-                  child: OutlinedButton.icon(
-                    onPressed: null,
-                    icon: const Icon(LucideIcons.arrowUpDown),
-                    label: Text(_sortOption),
+              // Sort dropdown - right side
+              PopupMenuButton<String>(
+                initialValue: _sortOption,
+                onSelected: (String value) {
+                  setState(() {
+                    _sortOption = value;
+                  });
+                  // TODO: Implement sort functionality
+                },
+                itemBuilder: (BuildContext context) => _sortOptions
+                    .map(
+                      (option) => PopupMenuItem<String>(
+                        value: option,
+                        child: Text(option),
+                      ),
+                    )
+                    .toList(),
+                child: OutlinedButton.icon(
+                  onPressed: null,
+                  icon: const Icon(LucideIcons.arrowUpDown, size: 16),
+                  label: Text(
+                    _sortOption,
+                    style: const TextStyle(fontSize: 14),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
                   ),
                 ),
               ),

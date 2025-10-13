@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:datn_mobile/core/router/router.gr.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/common/projects_row.dart';
-import 'package:datn_mobile/features/projects/ui/widgets/resource/resource_list_view.dart';
 import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,18 +54,8 @@ class _ProjectsView extends ConsumerStatefulWidget {
 }
 
 class _ProjectsViewState extends ConsumerState<_ProjectsView> {
-  String? selectedResourceType;
-
   void _onResourceTypeSelected(String resourceType) {
-    setState(() {
-      selectedResourceType = resourceType;
-    });
-  }
-
-  void _onBackToResourceTypes() {
-    setState(() {
-      selectedResourceType = null;
-    });
+    context.router.push(ResourceListRoute(resourceType: resourceType));
   }
 
   @override
@@ -110,12 +99,7 @@ class _ProjectsViewState extends ConsumerState<_ProjectsView> {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: selectedResourceType == null
-                ? ProjectsRow(onResourceTypeSelected: _onResourceTypeSelected)
-                : ResourceListView(
-                    resourceType: selectedResourceType!,
-                    onBack: _onBackToResourceTypes,
-                  ),
+            child: ProjectsRow(onResourceTypeSelected: _onResourceTypeSelected),
           ),
         ],
       ),
