@@ -18,6 +18,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: PlaceholderRouteAnnounce.page, path: 'announces'),
       ],
     ),
+    AutoRoute(page: ResourceListRoute.page, path: '/resources/:resourceType'),
     AutoRoute(page: PresentationRoute.page, path: '/presentation'),
   ];
 }

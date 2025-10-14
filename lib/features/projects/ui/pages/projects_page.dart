@@ -1,20 +1,22 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:datn_mobile/core/router/router.gr.dart';
-import 'package:datn_mobile/features/projects/controllers/controller_provider.dart';
-import 'package:datn_mobile/features/projects/ui/widgets/presentation/presentation_card.dart';
-import 'package:datn_mobile/shared/riverpod_ext/async_value_easy_when.dart';
+import 'package:datn_mobile/features/projects/ui/widgets/common/projects_row.dart';
+import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 @RoutePage()
-class ProjectsPage extends StatelessWidget {
+class ProjectsPage extends ConsumerWidget {
   const ProjectsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = ref.watch(translationsPod);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Presentations')),
-      body: _ProjectsView(),
+      appBar: AppBar(title: Text(t.projects.title)),
+      body: const _ProjectsView(),
       floatingActionButton: SizedBox(
         width: 96,
         height: 96,
@@ -44,9 +46,22 @@ class ProjectsPage extends StatelessWidget {
   }
 }
 
-class _ProjectsView extends StatelessWidget {
+class _ProjectsView extends ConsumerStatefulWidget {
+  const _ProjectsView();
+
+  @override
+  ConsumerState<_ProjectsView> createState() => _ProjectsViewState();
+}
+
+class _ProjectsViewState extends ConsumerState<_ProjectsView> {
+  void _onResourceTypeSelected(String resourceType) {
+    context.router.push(ResourceListRoute(resourceType: resourceType));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final t = ref.watch(translationsPod);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
@@ -65,8 +80,8 @@ class _ProjectsView extends StatelessWidget {
                 onChanged: (_) {
                   controller.openView();
                 },
-                leading: const Icon(Icons.search),
-                hintText: 'Search projects...',
+                leading: const Icon(LucideIcons.search),
+                hintText: t.projects.search_hint,
               );
             },
             suggestionsBuilder:
@@ -76,57 +91,17 @@ class _ProjectsView extends StatelessWidget {
                     return ListTile(
                       title: Text(item),
                       onTap: () {
-                        // setState(() {
-                        //   controller.closeView(item);
-                        // });
+                        // TODO: Implement search functionality
                       },
                     );
                   });
                 },
           ),
           const SizedBox(height: 16),
-          const _ProjectsRow(),
+          Expanded(
+            child: ProjectsRow(onResourceTypeSelected: _onResourceTypeSelected),
+          ),
         ],
-      ),
-    );
-  }
-}
-
-class _ProjectsRow extends ConsumerWidget {
-  const _ProjectsRow();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final presentationsAsync = ref.watch(presentationsControllerProvider);
-
-    return presentationsAsync.easyWhen(
-      data: (presentations) => RefreshIndicator(
-        onRefresh: () async {
-          await ref.read(presentationsControllerProvider.notifier).refresh();
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Your recently works',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: presentations
-                    .map(
-                      (presentation) => Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: PresentationCard(presentation: presentation),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

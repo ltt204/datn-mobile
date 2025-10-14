@@ -1,9 +1,12 @@
 import 'package:datn_mobile/features/projects/domain/entity/value_object/slide.dart';
 import 'package:datn_mobile/features/projects/enum/resource_type.dart';
 import 'package:datn_mobile/features/projects/ui/widgets/common/thumbnail.dart';
+import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-class AbstractDocumentCard extends StatelessWidget {
+class AbstractDocumentCard extends ConsumerWidget {
   const AbstractDocumentCard({
     super.key,
     required this.title,
@@ -22,7 +25,10 @@ class AbstractDocumentCard extends StatelessWidget {
   final ResourceType resourceType;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = ref.watch(translationsPod);
+    final dateFormat = DateFormat.yMMMd(t.$meta.locale.languageCode);
+
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       elevation: 4,
@@ -58,11 +64,13 @@ class AbstractDocumentCard extends StatelessWidget {
                   if (createdAt != null) ...[
                     const SizedBox(height: 8),
                     Text(
-                      'Created at: ${createdAt!.toLocal().toIso8601String()}',
+                      t.projects.created_at(
+                        date: dateFormat.format(createdAt!),
+                      ),
                       style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
-                  Text("Type: ${resourceType.getValue()}"),
+                  Text(t.projects.type(type: resourceType.getValue())),
                 ],
               ),
             ],
