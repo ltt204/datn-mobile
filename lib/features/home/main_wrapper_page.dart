@@ -131,6 +131,21 @@ class MainWrapperPage extends StatelessWidget {
               ),
               label: "",
             ),
+            BottomNavigationBarItem(
+              icon: _bottomItemActivated(
+                LucideIcons.settings,
+                "Settings",
+                false,
+                context,
+              ),
+              activeIcon: _bottomItemActivated(
+                LucideIcons.settings,
+                "Settings",
+                true,
+                context,
+              ),
+              label: "",
+            ),
           ],
         );
       },

@@ -18,6 +18,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: PlaceholderRouteAnnounce.page, path: 'announces'),
       ],
     ),
-    AutoRoute(page: PresentationRoute.page, path: '/presentation'),
+    AutoRoute(page: WebviewRoute.page, path: '/webview'),
+    AutoRoute(page: InappwebviewRoute.page, path: '/inappwebview'),
   ];
 }
