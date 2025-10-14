@@ -57,7 +57,7 @@ class MainWrapperPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: [
-        PlaceholderRoute(),
+        const HomeRoute(),
         const ProjectsRoute(),
         PlaceholderRouteSchedule(),
         PlaceholderRouteAnnounce(),
