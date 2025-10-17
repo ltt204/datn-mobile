@@ -1,18 +1,21 @@
+import 'package:datn_mobile/shared/helper/option_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datn_mobile/core/theme/theme_controller.dart';
-import 'package:datn_mobile/features/setting/widget/bottom_sheet/option_bottom_sheet.dart';
 import 'package:datn_mobile/shared/pods/translation_pod.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 
 void showThemeBottomSheet(BuildContext context, WidgetRef ref) {
   final t = ref.read(translationsPod);
   final currentTheme = ref.read(themeControllerProvider);
 
-  showOptionBottomSheet<ThemeMode>(
+  final showBottomSheet = showOptionBottomSheet<ThemeMode>(
     context: context,
     title: t.settings.themeBottomSheet.title,
     options: ThemeMode.values,
     currentValue: currentTheme,
+    showLoadingOverlay: true,
+    overlayDelay: const Duration(milliseconds: 1250),
     onOptionSelected: (themeMode) async {
       ref.read(themeControllerProvider.notifier).changeTheme(themeMode);
     },
@@ -37,5 +40,10 @@ void showThemeBottomSheet(BuildContext context, WidgetRef ref) {
         ThemeMode.system => t.settings.themeBottomSheet.systemDescription,
       };
     },
+  );
+
+  LoadingOverlay.withFuture(
+    future: showBottomSheet,
+    child: const SizedBox.shrink(),
   );
 }

@@ -1,8 +1,8 @@
+import 'package:datn_mobile/shared/helper/option_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:datn_mobile/shared/pods/translation_pod.dart';
 import 'package:datn_mobile/i18n/strings.g.dart';
-import 'package:datn_mobile/features/setting/widget/bottom_sheet/option_bottom_sheet.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 void showLanguageBottomSheet(BuildContext context, WidgetRef ref) {
@@ -14,6 +14,8 @@ void showLanguageBottomSheet(BuildContext context, WidgetRef ref) {
     title: t.settings.languageBottomSheet.title,
     options: AppLocale.values,
     currentValue: currentLocale,
+    showLoadingOverlay: true,
+    overlayDelay: const Duration(milliseconds: 1250),
     onOptionSelected: (locale) async {
       final update = switch (locale) {
         AppLocale.en => await AppLocale.en.build(),

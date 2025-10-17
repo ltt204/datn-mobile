@@ -74,5 +74,10 @@
         "hours_ago": "$count giờ trước",
         "yesterday": "Hôm qua",
         "days_ago": "$count ngày trước"
-    }
+    },
+    "errors": {
+        "network_error": "Đã xảy ra lỗi mạng. Vui lòng thử lại.",
+        "unknown_error": "Đã xảy ra lỗi không xác định. Vui lòng thử lại."
+    },
+    "loading": "Đang tải..."
 }
