@@ -37,7 +37,6 @@ class Themes {
     scheme: FlexScheme.brandBlue,
     surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
     blendLevel: 15,
-    appBarStyle: FlexAppBarStyle.background,
     appBarOpacity: 0.90,
     tabBarStyle: FlexTabBarStyle.forBackground,
     subThemesData: const FlexSubThemesData(
