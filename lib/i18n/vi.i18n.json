@@ -8,6 +8,31 @@
     "personalInformation": "Thông tin cá nhân",
     "passwordAndSecurity": "Mật khẩu và bảo mật",
     "paymentMethods": "Phương thức thanh toán",
+    "settings": {
+        "appSettings": "Cài đặt ứng dụng",
+        "support": "Hỗ trợ",
+        "notifications": "Thông báo",
+        "language": "Ngôn ngữ",
+        "theme": "Giao diện",
+        "helpCenter": "Trung tâm trợ giúp",
+        "contactUs": "Liên hệ chúng tôi",
+        "logOut": "Đăng xuất",
+        "save": "Lưu",
+        "languageBottomSheet": {
+            "title": "Ngôn ngữ",
+            "english": "English",
+            "vietnamese": "Tiếng Việt"
+        },
+        "themeBottomSheet": {
+            "title": "Giao diện",
+            "light": "Sáng",
+            "dark": "Tối",
+            "system": "Hệ thống",
+            "lightDescription": "Luôn sử dụng giao diện sáng",
+            "darkDescription": "Luôn sử dụng giao diện tối",
+            "systemDescription": "Theo cài đặt hệ thống"
+        }
+    },
     "homeGreeting": "Xin chào!",
     "upgradePlan": "Nâng cấp gói",
     "todayWorks": "Công việc hôm nay!",
